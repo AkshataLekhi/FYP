@@ -1,0 +1,438 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,500&display=swap");
+
+:root {
+  --primary-color: #fd2727;
+  --secondary-color: #e8f1fa;
+  --text-dark: #282d31;
+  --text-light: #767268;
+  --extra-light: #f3f4f6;
+
+  --max-width: 1200px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.section__container {
+  padding: 5rem 1rem;
+  max-width: var(--max-width);
+  margin: auto;
+}
+
+.section__container h4{
+  font-weight: bold;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+
+.section__title {
+  font-size: 30px;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  text-align: center;
+  font-family: 'Times New Roman';
+}
+
+.section__subtitle {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--primary-color);
+  margin-bottom: 5rem;
+  text-align: center;
+}
+
+img {
+  width: 100%;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+nav {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2rem 1rem;
+  width: 100%;
+  max-width: var(--max-width);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav__logo a {
+  text-decoration: none;
+  color: var(--extra-light);
+  font-size: 1.5rem;
+}
+
+.nav__links {
+  display: none;
+  list-style: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+.link {
+  color: var(--extra-light);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.link:hover {
+  color: var(--primary-color);
+}
+
+.image-container img {
+  max-width: 200px;
+  height: auto;
+}
+
+.journey__container {
+  background-color: #feeded;
+  padding: 50px 0;
+}
+
+.journey__container {
+  background-color: #feeded; /* Keeping the light pink background */
+  padding: 60px 0;
+}
+
+.section__title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #fd2727;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.section__subtitle {
+  font-size: 1rem;
+  font-style: italic;
+  color: #fd2727;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Grid Layout for Images */
+.journey__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Image Card Styling */
+.img__card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Image Styling */
+.img__card img {
+  width: 100%; /* Ensures all images fit within the container */
+  height: 300px; /* Keeps images uniform */
+  object-fit: cover; /* Maintains aspect ratio without distortion */
+  border-radius: 8px;
+}
+
+/* Hover Effect */
+.img__card:hover {
+  transform: translateY(-5px); /* Lifts the card slightly */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Caption */
+.img__name {
+  font-style: italic;
+  color: #fd2727;
+  margin-top: 10px;
+}
+
+
+.banner__container {
+  background-image: url("../images/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-size: 1350px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 60px 50px;
+  min-height: 400px;
+}
+
+/* Ensuring the text is properly aligned to the right */
+.banner__content {
+  max-width: 600px;
+  text-align: right;
+  color: rgb(255, 255, 255);
+}
+
+.banner__content h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.banner__content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.banner__content .signup-btn {
+  display: inline-block;
+  background-color: rgb(255, 0, 0); /* Button color */
+  color: white;
+  font-size: 18px;
+  font-family: 'Times New Roman';
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+.banner__content .signup-btn:hover {
+  background-color: rgb(211, 0, 0); /* Darker color on hover */
+}
+
+
+/* Header Section */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+}
+
+.logo {
+  color: white;
+  font-weight: bold;
+  padding: 15px 25px;
+  border-radius: 50%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; /* Adjust width */
+  height: 60px; /* Adjust height */
+  overflow: hidden; /* Ensures the image stays within the circle */
+}
+
+/* Logo Image Styling */
+.logo img {
+  width: 80px; /* Adjust logo size */
+  height: auto;
+  border-radius: 50%; /* Ensures circular shape */
+}
+
+
+nav {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 15px;
+}
+
+nav ul li {
+display: inline;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: rgb(18, 194, 53);
+  font-size: 20px;
+  font-family:'Times New Roman';
+  padding: 555px 55px;
+  transition: color 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+color: red; /* Changes color on hover */
+}
+
+
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.text-content {
+  width: 45%;
+}
+
+.text-content h1 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.text-content p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.cta-btn {
+  background-color: #b34e42;
+  color: white;
+  font-size: 18px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.cta-btn:hover {
+  background-color: #a0443a;
+}
+
+/* Image Content */
+.image-content img {
+  max-width: 250px;
+  height: auto;
+}
+
+/* Footer */
+/* Footer Container */
+footer {
+  background-color: #feeded;
+  color: rgb(255, 0, 0);
+  padding: 40px 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer__container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* Footer Sections */
+.footer__section {
+  flex: 1;
+  min-width: 280px;
+  margin: 10px;
+}
+
+.footer__section h3 {
+  border-bottom: 2px solid red;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+/* About Us Section */
+.footer__section.about p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Social Icons */
+.social__icons {
+  margin-top: 10px;
+}
+
+.social__icons a {
+  text-decoration: none;
+  color: rgb(255, 0, 0);
+  font-size: 1.5rem;
+  margin-right: 10px;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.social__icons a:hover {
+  color: rgb(182, 0, 0);
+  transform: scale(1.2);
+}
+
+/* Address Section */
+.footer__section.address p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer__section.address i {
+  color: red;
+  margin-right: 10px;
+}
+
+/* Contact Form */
+.footer__section.contact form {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer__section.contact input,
+.footer__section.contact textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ffd5d5;
+  color: rgb(255, 255, 255);
+}
+
+.footer__section.contact textarea {
+  height: 80px;
+  resize: none;
+}
+
+/* Send Button */
+.footer__section.contact button {
+  background-color: red;
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.footer__section.contact button:hover {
+  background-color: darkred;
+}
+
+/* Footer Bottom */
+.footer__bottom {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 14px;
+  border-top: 1px solid #ff0000;
+}
+
+.footer__bottom .highlight {
+  color: rgb(255, 0, 0);
+  font-weight: bold;
+}
+
+
