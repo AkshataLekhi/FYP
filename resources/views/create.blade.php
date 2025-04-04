@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/create.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <title>Create Post</title>
 </head>
 
@@ -17,8 +19,12 @@
     <div class="container">
         <div class="post-card">
             <h2 class="title">Create Your Post</h2>
-            <form id="postForm" enctype="multipart/form-data">
+
+            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+
+            {{-- <form id="postForm" enctype="multipart/form-data"> --}}
                 @csrf
+
                 <input type="text" name="title" id="title" placeholder="Title" class="input-field" required>
                 <input type="text" name="description" id="description" placeholder="Description" class="input-field" required>
                 <input type="url" name="links" id="links" placeholder="Links (Optional)" class="input-field">
@@ -28,7 +34,10 @@
         </div>
     </div>
 
-    <script>
+    <script src="{{ asset('js/create.js') }}"></script>
+
+
+    {{-- <script>
         document.getElementById("postForm").addEventListener("submit", function (event) {
             event.preventDefault();
 
@@ -66,7 +75,7 @@
 
             window.location.href = "{{ route('mainPage') }}"; // Redirect to main page
         }
-    </script>
+    </script> --}}
 
 </body>
 

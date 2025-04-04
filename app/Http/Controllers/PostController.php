@@ -10,7 +10,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('/mainPage', compact('posts'));
+        return view('mainPage', compact('posts'));
     }
 
     public function create()
@@ -19,34 +19,24 @@ class PostController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'caption' => 'required',
-            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'links' => 'nullable|url'
-        ]);
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string|max:1000',
+        'links' => 'nullable|url',
+        'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        if ($request->hasFile('picture')) {
-            $imagePath = $request->file('picture')->store('images', 'public');
-        } else {
-            return response()->json(['success' => false, 'message' => 'Image upload failed'], 400);
-        }
+    $imagePath = $request->file('picture')->store('images', 'public');
 
-        $post = Post::create([
-            'title' => $request->caption, // ✅ Save caption as title
-            'description' => $request->caption, // ✅ Save description (same as caption)
-            'picture' => $imagePath, // ✅ Save image path
-            'links' => $request->links // ✅ Save link if provided
-        ]);
+    Post::create([
+        'title' => $request->title,
+        'description' => $request->description,
+        'links' => $request->links,
+        'picture' => $imagePath,
+    ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Post created successfully!',
-            'post' => $post
-        ]);
-    }
-
-
-
+    return redirect()->route('mainPage')->with('success', 'Post uploaded successfully!');
 }
 
+}
