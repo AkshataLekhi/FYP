@@ -37,13 +37,20 @@
     </nav>
 
     <!-- Image Container -->
-    <div id="container">
-        <div class="col"></div>
-        <div class="col"></div>
-        <div class="col"></div>
-        <div class="col"></div>
-        <div class="col"></div>
-    </div>
+   <div id="container" class="row row-cols-1 row-cols-md-3 g-4 m-4">
+    @foreach ($posts as $post)
+        <div class="col">
+            <div class="card h-100" onclick="openModal('{{ asset('storage/' . $post->picture) }}', '{{ $post->title }}', '{{ $post->description }}')">
+                <img src="{{ asset('storage/' . $post->picture) }}" class="card-img-top" alt="{{ $post->title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $post->title }}</h5>
+                    <p class="card-text">{{ Str::limit($post->description, 100) }}</p>
+                </div>
+            </div>
+        </div>
+    @endforeach
+</div>
+
 
     <!-- Image Modal -->
     <div class="modal" id="postModal">
