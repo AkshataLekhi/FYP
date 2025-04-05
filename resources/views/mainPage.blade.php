@@ -22,12 +22,11 @@
         </a>
         <a href="#" class="active">Home</a>
         <a href="{{ route('create') }}">Create</a>
-        <input type="search" name ="search" class="search" id="searchInput" placeholder="Search">
+        <input type="search" name="search" class="search" id="searchInput" placeholder="Search">
         <a href="{{ route('profile') }}"><i class="bi bi-person-fill"></i></a>
         <a href="#"><i class="bi bi-bell-fill"></i></a>
         <a href="#"><i class="bi bi-chat-heart-fill"></i></a>
         <a href="#"><i class="bi bi-clock-history"></i></a>
-
         <a href="#" onclick="document.getElementById('logout-form').submit();" style="cursor: pointer;">
             <i class="bi bi-box-arrow-right"></i>
         </a>
@@ -45,39 +44,53 @@
         <div class="col"></div>
     </div>
 
-    <!-- Image Modal -->
-    <div class="modal" id="postModal">
+    <!-- Modal for Viewing Post -->
+    <div id="postModal" class="modal" style="display: none;">
         <div class="modal-content">
-
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <img id="modalImage" class="modal-img" alt="Modal Image">
+            <img id="modalImage" class="modal-img" src="" alt="Post Image">
             <h3 id="modalTitle"></h3>
             <p id="modalDescription"></p>
-
-            <div class="action-buttons">
-                <button onclick="likePost()"><i class="bi bi-heart-fill"></i></button>
-                <button onclick="commentPost()"><i class="bi bi-chat-left-heart-fill"></i></button>
-                <button onclick="savePost()"><i class="bi bi-bookmark-heart-fill"></i></button>
-                <button onclick="deletePost()"><i class="bi bi-trash3-fill"></i></button>
-
+            <div class="action-buttons mt-3">
+                <button class="btn btn-success" onclick="likePost()">Like</button>
+                <button class="btn btn-primary" onclick="commentPost()">Comment</button>
+                <button class="btn btn-warning" onclick="savePost()">Save</button>
+                <button class="btn btn-danger" onclick="deletePost()">Delete</button>
             </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                <div class="modal-content">
+            <!-- Rating Modal Trigger -->
+            <div class="d-flex justify-content-center my-3">
+                <button type="button" class="custom-small-btn btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    RATE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comment Popup -->
+    <div id="commentPopup" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeCommentModal()">&times;</span>
+            <h4>Leave a Comment</h4>
+            <textarea id="commentInput" class="form-control mb-2" placeholder="Type your comment..."></textarea>
+            <button class="btn btn-success" onclick="submitComment()">Submit</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap Rating Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
                 <form action="{{ '/rating' }}" method="POST">
                     @csrf
-                    {{-- <input type="hidden" name="product_id"> --}}
-
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">RATE ME !</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
-                        <div class="rating-css">
+                        <div class="rating-css text-center">
                             <div class="star-icon">
                                 <input type="radio" value="1" name="product_rating" checked id="rating1">
                                 <label for="rating1" class="bi bi-star-fill"></label>
@@ -93,36 +106,16 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn" style="background-color: #e60000; color: white;">
-                        Submit
-                    </button>
-
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Submit</button>
+                    </div>
                 </form>
 
-                </div>
-                </div>
             </div>
-
-            <div class="d-flex justify-content-center my-3">
-            <button type="button" class="custom-small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                RATE
-            </button>
-            </div>
-
-
         </div>
     </div>
 
-    <!-- Comment Popup Modal -->
-    <div id="commentPopup" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeCommentModal()">&times;</span>
-            <h3>Post a Comment</h3>
-            <textarea id="commentInput" placeholder="Write your comment..."></textarea>
-            <button onclick="submitComment()">Submit</button>
-        </div>
-    </div>
-
+    <!-- Scripts -->
     <script src="{{ asset('js/mainPage.js') }}"></script>
 
 </body>
