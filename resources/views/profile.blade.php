@@ -34,9 +34,9 @@
 
             <img src="{{ URL::asset('uploads/profiles/'.$user->picture) }}" class="mx-auto d-block mb-2" width="100px" alt="Profile Picture">
 
-                <input type="text" name="fullname" class="input-field" placeholder="Name" value="{{ $user->fullname}}" required>
+                <input type="text" name="fullname" class="input-field" placeholder="Name" value="" required>
                 <input type="email" name="email" class="input-field" placeholder="Email" value="{{ $user->email}}" readonly required>
-                <input type="text" name="password" class="input-field" placeholder="Password" value="{{ $user->password}}" required>
+                <input type="text" name="password" class="input-field" placeholder="Password" value="" required>
                 <input type="file" name="file" class="input-field">
                 <button type="submit" class="save-btn">Save Changes</button>
             </form>

@@ -20,7 +20,6 @@ const fetchImageData = async () => {
     }
 };
 
-
 // Load User-Created Posts from Local Storage
 const loadUserPosts = () => {
     return JSON.parse(localStorage.getItem('userPosts')) || [];
