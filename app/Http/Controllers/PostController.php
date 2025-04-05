@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 
+
 class PostController extends Controller
 {
     public function index()
@@ -19,7 +20,7 @@ class PostController extends Controller
     }
 
     public function store(Request $request)
-{
+    {
     $request->validate([
         'title' => 'required|string|max:255',
         'description' => 'required|string|max:1000',
@@ -37,6 +38,7 @@ class PostController extends Controller
     ]);
 
     return redirect()->route('mainPage')->with('success', 'Post uploaded successfully!');
-}
+    }
+
 
 }

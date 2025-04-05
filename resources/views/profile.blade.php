@@ -10,7 +10,7 @@
 
 </head>
 <body>
-    <a href="{{ url('/mainPage') }}" class="back-arrow">
+    <a href="{{ url('account') }}" class="back-arrow">
         <i class="bi bi-arrow-left"></i>
     </a>
     <div class="container">
@@ -31,8 +31,7 @@
             <form action="{{ URL::to('updateUser')}}" method="POST" enctype="multipart/form-data">
 
             @csrf
-
-            <img src="{{ URL::asset('uploads/profiles/'.$user->picture) }}" class="mx-auto d-block mb-2" width="100px" alt="Profile Picture">
+            <img src="{{ asset('uploads/profiles/' . ($user->picture ?? 'default.png')) }}" class="mx-auto d-block mb-2" width="100px" alt="Profile Picture">
 
                 <input type="text" name="fullname" class="input-field" placeholder="Name" value="" required>
                 <input type="email" name="email" class="input-field" placeholder="Email" value="{{ $user->email}}" readonly required>

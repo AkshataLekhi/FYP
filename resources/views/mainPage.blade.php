@@ -23,29 +23,45 @@
         <a href="#" class="active">Home</a>
         <a href="{{ route('create') }}">Create</a>
         <input type="search" name="search" class="search" id="searchInput" placeholder="Search">
-        <a href="{{ route('profile') }}"><i class="bi bi-person-fill"></i></a>
-        <a href="#"><i class="bi bi-bell-fill"></i></a>
-        <a href="#"><i class="bi bi-chat-heart-fill"></i></a>
-        <a href="#"><i class="bi bi-clock-history"></i></a>
-        <a href="#" onclick="document.getElementById('logout-form').submit();" style="cursor: pointer;">
-            <i class="bi bi-box-arrow-right"></i>
-        </a>
+        <div class="nav-icons">
+            <a href="{{ route('account') }}"><i class="bi bi-person-fill"></i></a>
+            <a href="#"><i class="bi bi-bell-fill"></i></a>
+            <a href="#"><i class="bi bi-chat-heart-fill"></i></a>
+            <a href="#"><i class="bi bi-clock-history"></i></a>
+            <a href="#" onclick="document.getElementById('logout-form').submit();" style="cursor: pointer;">
+                <i class="bi bi-box-arrow-right"></i>
+            </a>
+        </div>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
     </nav>
 
-    <!-- Image Container -->
-    <div class="container mt-4">
-        <div class="row">
+    <!-- Pinterest Style Image Container -->
+    <div class="pinterest-container">
+        <div class="pinterest-grid">
             @foreach ($posts as $post)
-                <div class="col-md-4 mb-4">
+                <div class="pinterest-card" data-post-id="{{ $post->id }}">
                     <div class="card">
                         <img src="{{ asset('storage/' . $post->picture) }}" class="card-img-top" alt="{{ $post->title }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ $post->title }}</h5>
                             <p class="card-text">{{ $post->description }}</p>
-                            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#ratingModal-{{ $post->id }}">Rate</button>
+
+                            <div class="card-actions">
+                                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#ratingModal-{{ $post->id }}">Rate</button>
+
+                                <div class="action-buttons">
+                                    <a href="#" class="action-btn like-btn" data-post-id="{{ $post->id }}">
+                                        <i class="bi bi-heart"></i>
+                                        <span class="like-count">{{ $post->likes_count ?? 0 }}</span>
+                                    </a>
+                                    <a href="#" class="action-btn comment-btn" data-bs-toggle="modal" data-bs-target="#commentModal-{{ $post->id }}">
+                                        <i class="bi bi-chat"></i>
+                                        <span class="comment-count">{{ $post->comments_count ?? 0 }}</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -58,7 +74,7 @@
                                 @csrf
                                 <input type="hidden" name="post_id" value="{{ $post->id }}">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="ratingLabel{{ $post->id }}">Rate {{ $post->title }}</h5>
+                                    <h5 class="modal-title" id="ratingLabel{{ $post->id }}">RATE "{{ $post->title }}"</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -78,7 +94,56 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Comment Modal -->
+                <div class="modal fade" id="commentModal-{{ $post->id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Comments on "{{ $post->title }}"</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="comments-section">
+                                    @if(!empty($post->comments) && $post->comments->count())
+                                        @foreach($post->comments as $comment)
+                                            <div class="comment">
+                                                <strong>{{ $comment->user->name }}</strong>
+                                                <p>{{ $comment->content }}</p>
+                                                <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                                            </div>
+                                            <hr>
+                                        @endforeach
+                                    @else
+                                        <p>No comments yet.</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             @endforeach
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this post?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                </div>
+            </div>
         </div>
     </div>
 

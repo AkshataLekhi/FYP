@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\AccountController;
+
 
 // Landing page
 Route::get('/', function () {
@@ -42,3 +44,12 @@ Route::get('/create', function () {
 
 // Rating submission
 Route::post('/rating', [RatingController::class, 'add']);
+
+
+// Account Routes
+Route::get('/account', [AccountController::class, 'index'])->name('account');
+
+// Post Save/Unsave Routes
+Route::post('/posts/{post}/save', [PostController::class, 'save'])->name('posts.save');
+Route::post('/posts/{post}/unsave', [PostController::class, 'unsave'])->name('posts.unsave');
+
