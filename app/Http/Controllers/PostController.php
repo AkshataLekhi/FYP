@@ -24,7 +24,6 @@ class PostController extends Controller
     $request->validate([
         'title' => 'required|string|max:255',
         'description' => 'required|string|max:1000',
-        'links' => 'nullable|url',
         'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
@@ -33,7 +32,6 @@ class PostController extends Controller
     Post::create([
         'title' => $request->title,
         'description' => $request->description,
-        'links' => $request->links,
         'picture' => $imagePath,
     ]);
 
@@ -64,7 +62,6 @@ class PostController extends Controller
 
         return response()->json(['success' => true]);
     }
-
 
 
 }

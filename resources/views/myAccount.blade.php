@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/account.css') }}">
 </head>
 <body>
-    <div class="profile-section">
+    <div class="profile-section"> 
 
         <a href="{{ url('/mainPage') }}" class="back-arrow">
             <i class="bi bi-arrow-left"></i>
@@ -89,7 +89,7 @@
     <div id="saves" class="tab-content">
 
         <!-- You can show saved items here -->
-        
+
     </div>
 
     <script src="{{ asset('js/account.js') }}"></script>

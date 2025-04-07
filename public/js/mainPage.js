@@ -130,3 +130,45 @@ document.addEventListener('DOMContentLoaded', function() {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const saveButtons = document.querySelectorAll('.save-btn');
+
+    // Load saved posts from localStorage
+    let savedPostIds = JSON.parse(localStorage.getItem('savedPosts')) || [];
+
+    // Highlight already saved posts
+    savedPostIds.forEach(id => {
+        const icon = document.querySelector(`.save-btn[data-post-id="${id}"] i`);
+        if (icon) {
+            icon.classList.remove('bi-bookmark');
+            icon.classList.add('bi-bookmark-fill');
+        }
+    });
+
+    // Handle save button clicks
+    saveButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+            const postId = this.dataset.postId;
+            const icon = this.querySelector('i');
+
+            if (savedPostIds.includes(postId)) {
+                // Unsave
+                savedPostIds = savedPostIds.filter(id => id !== postId);
+                icon.classList.remove('bi-bookmark-fill');
+                icon.classList.add('bi-bookmark');
+            } else {
+                // Save
+                savedPostIds.push(postId);
+                icon.classList.remove('bi-bookmark');
+                icon.classList.add('bi-bookmark-fill');
+            }
+
+            // Store in localStorage
+            localStorage.setItem('savedPosts', JSON.stringify(savedPostIds));
+        });
+    });
+});
+

@@ -24,9 +24,8 @@
 
                 @csrf
 
-                <input type="text" name="title" id="title" placeholder="Title" class="input-field" required>
+                <input type="text" name="title" id="title" placeholder="Add Caption" class="input-field" required>
                 <input type="text" name="description" id="description" placeholder="Description" class="input-field" required>
-                <input type="url" name="links" id="links" placeholder="Links (Optional)" class="input-field">
                 <input type="file" name="picture" id="imageInput" accept="image/*" class="input-field" required>
                 <button type="submit" class="post-btn">Post</button>
             </form>

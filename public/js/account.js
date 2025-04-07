@@ -95,3 +95,34 @@
 
     // Show posts by default
     document.getElementById('posts').classList.add('active');
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTab = document.querySelector('.tab-link[data-target="saves"]');
+        const postsTab = document.querySelector('.tab-link[data-target="posts"]');
+        const savesContent = document.getElementById('saves');
+        const postsContent = document.getElementById('posts');
+        const savedPostIds = JSON.parse(localStorage.getItem('savedPosts')) || [];
+
+        savedTab.addEventListener('click', () => {
+            postsContent.style.display = 'none';
+            savesContent.style.display = 'block';
+
+            const allPosts = document.querySelectorAll('#posts .pinterest-card');
+            savesContent.innerHTML = '<div class="pinterest-container"><div class="pinterest-grid"></div></div>';
+            const savesGrid = savesContent.querySelector('.pinterest-grid');
+
+            allPosts.forEach(card => {
+                const postId = card.dataset.postId;
+                if (savedPostIds.includes(postId)) {
+                    savesGrid.appendChild(card.cloneNode(true));
+                }
+            });
+        });
+
+        postsTab.addEventListener('click', () => {
+            postsContent.style.display = 'block';
+            savesContent.style.display = 'none';
+        });
+    });
+

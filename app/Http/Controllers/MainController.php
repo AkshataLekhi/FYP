@@ -13,25 +13,21 @@ class MainController extends Controller
     {
         $allPosts=Post::all();
         return view('landingPage');
-        // return view('landingPage', compact('allPosts'));
     }
 
     public function index()
     {
-        $posts = Post::latest()->get(); // Fetch all posts (latest first)
-        return view('main', compact('posts')); // Pass $posts to the view
+        $posts = Post::latest()->get();
+        return view('main', compact('posts'));
     }
 
-    /**
-     * Store a new post in the database.
-     */
+   
     public function store(Request $request)
     {
         // Validate request data
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string|max:500',
-            'links' => 'nullable|url',
             'pin_size' => 'required|in:small,medium,large',
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -49,7 +45,6 @@ class MainController extends Controller
         Post::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
-            'links' => $request->input('links'),
             'picture' => $path, // Store image path
         ]);
 

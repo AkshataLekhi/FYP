@@ -60,6 +60,9 @@
                                         <i class="bi bi-chat"></i>
                                         <span class="comment-count">{{ $post->comments_count ?? 0 }}</span>
                                     </a>
+                                    <a href="#" class="action-btn save-btn" data-post-id="{{ $post->id }}">
+                                        <i class="bi bi-bookmark"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -129,6 +132,6 @@
     </div>
 
     <script src="{{ asset('js/mainPage.js') }}"></script>
-    
+
 </body>
 </html>

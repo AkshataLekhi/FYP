@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 
 class AccountController extends Controller
 {
-    // public function index()
-    // {
-    //     return view('myAccount');
-    // }
+
 
     public function index()
     {
@@ -28,7 +26,6 @@ class AccountController extends Controller
     $request->validate([
         'title' => 'required|string|max:255',
         'description' => 'required|string|max:1000',
-        'links' => 'nullable|url',
         'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
@@ -37,7 +34,6 @@ class AccountController extends Controller
     Post::create([
         'title' => $request->title,
         'description' => $request->description,
-        'links' => $request->links,
         'picture' => $imagePath,
     ]);
 
