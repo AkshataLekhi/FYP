@@ -362,29 +362,3 @@ nav a img {
     color: #777;
     margin-bottom: 20px;
 }
-
-/* Edit/Delete buttons */
-.action-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.action-buttons a {
-    color: #555;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-}
-
-.action-buttons a:hover {
-    background: #f5f5f5;
-}
-
-.action-buttons a i {
-    font-size: 16px;
-}

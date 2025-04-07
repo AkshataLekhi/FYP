@@ -53,3 +53,7 @@ Route::get('/account', [AccountController::class, 'index'])->name('account');
 Route::post('/posts/{post}/save', [PostController::class, 'save'])->name('posts.save');
 Route::post('/posts/{post}/unsave', [PostController::class, 'unsave'])->name('posts.unsave');
 
+
+Route::put('/posts/{id}', [PostController::class, 'update']);
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+

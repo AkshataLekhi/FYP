@@ -40,5 +40,31 @@ class PostController extends Controller
     return redirect()->route('mainPage')->with('success', 'Post uploaded successfully!');
     }
 
+    public function update(Request $request, $id)
+    {
+    $post = Post::findOrFail($id);
+
+    // Optional: You can add validation
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+    ]);
+
+    $post->title = $request->title;
+    $post->description = $request->description;
+    $post->save();
+
+    return redirect()->back()->with('success', 'Post updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $post = \App\Models\Post::findOrFail($id);
+        $post->delete();
+
+        return response()->json(['success' => true]);
+    }
+
+
 
 }
