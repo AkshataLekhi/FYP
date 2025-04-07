@@ -21,7 +21,7 @@ class MainController extends Controller
         return view('main', compact('posts'));
     }
 
-   
+
     public function store(Request $request)
     {
         // Validate request data

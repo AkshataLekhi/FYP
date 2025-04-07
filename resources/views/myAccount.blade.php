@@ -5,11 +5,12 @@
 
     <title>Your Account</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('css/account.css') }}">
 </head>
 <body>
-    <div class="profile-section"> 
+    <div class="profile-section">
 
         <a href="{{ url('/mainPage') }}" class="back-arrow">
             <i class="bi bi-arrow-left"></i>

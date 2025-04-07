@@ -126,3 +126,62 @@
         });
     });
 
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTab = document.querySelector('.tab-link[data-target="saves"]');
+        const postsTab = document.querySelector('.tab-link[data-target="posts"]');
+        const savesContent = document.getElementById('saves');
+        const postsContent = document.getElementById('posts');
+        let savedPostIds = JSON.parse(localStorage.getItem('savedPosts')) || [];
+
+        savedTab.addEventListener('click', () => {
+            postsContent.style.display = 'none';
+            savesContent.style.display = 'block';
+
+            const allPosts = document.querySelectorAll('#posts .pinterest-card');
+            savesContent.innerHTML = '<div class="pinterest-container"><div class="pinterest-grid"></div></div>';
+            const savesGrid = savesContent.querySelector('.pinterest-grid');
+
+            allPosts.forEach(card => {
+                const postId = card.dataset.postId;
+                if (savedPostIds.includes(postId)) {
+                    const clonedCard = card.cloneNode(true);
+
+                    // Remove edit & delete buttons
+                    const actionButtons = clonedCard.querySelector('.action-buttons');
+                    if (actionButtons) actionButtons.remove();
+
+                    // Add unsave button
+                    const newActionButtons = document.createElement('div');
+                    newActionButtons.classList.add('action-buttons');
+
+                    const unsaveBtn = document.createElement('a');
+                    unsaveBtn.href = '#';
+                    unsaveBtn.classList.add('action-btn', 'unsave-btn');
+                    unsaveBtn.dataset.postId = postId;
+                    unsaveBtn.innerHTML = '<i class="bi bi-bookmark-fill"></i>';
+
+                    newActionButtons.appendChild(unsaveBtn);
+                    clonedCard.querySelector('.card-body').appendChild(newActionButtons);
+
+                    savesGrid.appendChild(clonedCard);
+                }
+            });
+
+            // Handle unsave click
+            document.querySelectorAll('.unsave-btn').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const postId = this.dataset.postId;
+                    savedPostIds = savedPostIds.filter(id => id !== postId);
+                    localStorage.setItem('savedPosts', JSON.stringify(savedPostIds));
+                    this.closest('.pinterest-card').remove();
+                });
+            });
+        });
+
+        postsTab.addEventListener('click', () => {
+            postsContent.style.display = 'block';
+            savesContent.style.display = 'none';
+        });
+    });
+

@@ -130,6 +130,55 @@ document.addEventListener('DOMContentLoaded', function() {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const likeButtons = document.querySelectorAll('.like-btn');
+
+    // Get liked posts from localStorage
+    let likedPostData = JSON.parse(localStorage.getItem('likedPosts')) || {};
+
+    // Show already liked posts and counts
+    likeButtons.forEach(button => {
+        const postId = button.dataset.postId;
+        const icon = button.querySelector('i');
+        const countSpan = button.querySelector('.like-count');
+
+        if (likedPostData[postId]) {
+            icon.classList.remove('bi-heart');
+            icon.classList.add('bi-heart-fill');
+            countSpan.textContent = likedPostData[postId];
+        }
+    });
+
+    // Handle like/unlike
+    likeButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const postId = this.dataset.postId;
+            const icon = this.querySelector('i');
+            const countSpan = this.querySelector('.like-count');
+
+            let count = parseInt(countSpan.textContent);
+
+            if (likedPostData[postId]) {
+                // Unlike
+                delete likedPostData[postId];
+                icon.classList.remove('bi-heart-fill');
+                icon.classList.add('bi-heart');
+                count = Math.max(0, count - 1);
+            } else {
+                // Like
+                likedPostData[postId] = count + 1;
+                icon.classList.remove('bi-heart');
+                icon.classList.add('bi-heart-fill');
+                count = count + 1;
+            }
+
+            countSpan.textContent = count;
+            localStorage.setItem('likedPosts', JSON.stringify(likedPostData));
+        });
+    });
+});
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -171,4 +220,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
