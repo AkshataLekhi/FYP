@@ -26,7 +26,7 @@
         <div class="nav-icons">
             <a href="{{ route('account') }}"><i class="bi bi-person-fill"></i></a>
             <a href="#"><i class="bi bi-bell-fill"></i></a>
-            <a href="#"><i class="bi bi-chat-heart-fill"></i></a>
+            <a href="{{ url('/chatify') }}"><i class="bi bi-chat-heart-fill"></i></a>
             <a href="#"><i class="bi bi-clock-history"></i></a>
             <a href="#" onclick="document.getElementById('logout-form').submit();" style="cursor: pointer;">
                 <i class="bi bi-box-arrow-right"></i>
@@ -40,7 +40,9 @@
     <!-- Pinterest Style Image Container -->
     <div class="pinterest-container">
         <div class="pinterest-grid">
+
             @foreach ($posts as $post)
+
                 <div class="pinterest-card" data-post-id="{{ $post->id }}">
                     <div class="card">
                         <img src="{{ asset('storage/' . $post->picture) }}" class="card-img-top" alt="{{ $post->title }}">

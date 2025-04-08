@@ -21,9 +21,12 @@ Route::get('/profile', [MainController::class, 'profile'])->name('profile');
 
 // Auth routes
 Route::get('/signup', [MainController::class, 'signup']);
-Route::get('/login', [MainController::class, 'login']);
+// Route::get('/login', [MainController::class, 'login']);
 
+Route::get('/login', [MainController::class, 'login'])->name('login');
 Route::post('/loginUser', [MainController::class, 'loginUser']);
+
+// Route::post('/loginUser', [MainController::class, 'loginUser']);
 Route::post('/signupUser', [MainController::class, 'signupUser'])->name('signupUser');
 Route::post('/updateUser', [MainController::class, 'updateUser'])->name('updateUser');
 
@@ -57,3 +60,13 @@ Route::post('/posts/{post}/unsave', [PostController::class, 'unsave'])->name('po
 Route::put('/posts/{id}', [PostController::class, 'update']);
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

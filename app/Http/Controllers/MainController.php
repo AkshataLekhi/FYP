@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class MainController extends Controller
@@ -86,19 +87,18 @@ class MainController extends Controller
 
     public function loginUser(Request $data)
     {
-        // Retrieve user by email.
         $user = User::where('email', $data->input('email'))->first();
 
-        // Verify that the user exists and the password matches.
         if ($user && Hash::check($data->input('password'), $user->password)) {
+            // Store in session
             session()->put('id', $user->id);
             session()->put('type', $user->type);
 
-            // Redirect based on user type.
-            if ($user->type == 'Member') {
-                return redirect('mainPage');
-            }
-            return redirect('mainPage');
+            // ✅ Laravel auth login (REQUIRED for Chatify)
+            Auth::login($user);
+
+            // ✅ Redirect to Chatify
+            return redirect('/mainPage');
         } else {
             return redirect('login')->with('error', 'Email/Password Incorrect');
         }

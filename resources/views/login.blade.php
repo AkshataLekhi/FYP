@@ -25,7 +25,8 @@
         </div>
       @endif
 
-      <form action="{{ url('loginUser') }}" method="POST">
+      {{-- <form action="{{ url('loginUser') }}" method="POST"> --}}
+    <form method="POST" action="{{ url('/login') }}">
         @csrf
         <h1>LOGIN</h1>
         <div class="input-box">
@@ -40,7 +41,7 @@
           <a href="#">Forgot Password?</a>
         </div>
         <button type="submit" class="btn">Login</button>
-      </form>
+    </form>
     </div>
 
     <div class="form-box register">
@@ -90,7 +91,7 @@
       </div>
     </div>
   </div>
-  <a href="index.html" class="back-arrow">
+  <a href="/" class="back-arrow">
     <i class="bi bi-arrow-left"></i>
   </a>
   <script src="{{ asset('js/signup.js') }}"></script>
