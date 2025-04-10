@@ -26,7 +26,7 @@
       @endif
 
       {{-- <form action="{{ url('loginUser') }}" method="POST"> --}}
-    <form method="POST" action="{{ url('/login') }}">
+        <form method="POST" action="{{ url('/loginUser') }}">
         @csrf
         <h1>LOGIN</h1>
         <div class="input-box">

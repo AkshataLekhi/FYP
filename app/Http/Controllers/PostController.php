@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 
 class PostController extends Controller
@@ -33,6 +34,7 @@ class PostController extends Controller
         'title' => $request->title,
         'description' => $request->description,
         'picture' => $imagePath,
+        'user_id' => Auth::id(),
     ]);
 
     return redirect()->route('mainPage')->with('success', 'Post uploaded successfully!');

@@ -12,7 +12,9 @@ class AccountController extends Controller
 
     public function index()
     {
-        $posts = Post::all();
+        // $posts = Post::all();
+
+        $posts = Auth::user()->posts;
         return view('myAccount', compact('posts'));
     }
 
@@ -35,6 +37,7 @@ class AccountController extends Controller
         'title' => $request->title,
         'description' => $request->description,
         'picture' => $imagePath,
+        'user_id' => Auth::id(),
     ]);
 
     return redirect()->route('mainPage')->with('success', 'Post uploaded successfully!');

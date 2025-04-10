@@ -155,4 +155,5 @@ class MainController extends Controller
 
         return redirect()->back()->with('error', 'Signup failed.');
     }
+
 }
