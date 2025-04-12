@@ -27,6 +27,9 @@
                 <input type="text" name="title" id="title" placeholder="Add Caption" class="input-field" required>
                 <input type="text" name="description" id="description" placeholder="Description" class="input-field" required>
                 <input type="file" name="picture" id="imageInput" accept="image/*" class="input-field" required>
+                <input type="text" name="option_one" placeholder="Option 1" class="input-field">
+                <input type="text" name="option_two" placeholder="Option 2" class="input-field">
+
                 <button type="submit" class="post-btn">Post</button>
             </form>
         </div>

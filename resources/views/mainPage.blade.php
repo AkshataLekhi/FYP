@@ -42,7 +42,6 @@
         <div class="pinterest-grid">
 
             @foreach ($posts as $post)
-
                 <div class="pinterest-card" data-post-id="{{ $post->id }}">
                     <div class="card">
                         <img src="{{ asset('storage/' . $post->picture) }}" class="card-img-top" alt="{{ $post->title }}">
@@ -50,10 +49,18 @@
                             <h5 class="card-title">{{ $post->title }}</h5>
                             <p class="card-text">{{ $post->description }}</p>
 
-                            <div class="card-actions">
-                                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#ratingModal-{{ $post->id }}">Rate</button>
+                            <div class="card-actions d-flex align-items-center gap-2">
+                                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#ratingModal-{{ $post->id }}">
+                                    Rate
+                                </button>
 
-                                <div class="action-buttons">
+                                @if($post->poll)
+                                    <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#pollModal-{{ $post->id }}" title="Vote Now!">
+                                        <i class="bi bi-bar-chart"></i>
+                                    </button>
+                                @endif
+                                
+                                <div class="action-buttons ms-auto d-flex gap-2">
                                     <a href="#" class="action-btn like-btn" data-post-id="{{ $post->id }}">
                                         <i class="bi bi-heart"></i>
                                         <span class="like-count">{{ $post->likes_count ?? 0 }}</span>
@@ -129,11 +136,55 @@
                     </div>
                 </div>
 
+                <!-- Poll Modal -->
+                @if($post->poll)
+                <div class="modal fade" id="pollModal-{{ $post->id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form action="{{ route('poll.vote') }}" method="POST" class="modal-content">
+                            @csrf
+                            <input type="hidden" name="poll_id" value="{{ $post->poll->id }}">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Vote in Poll</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <!-- Voting options -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="vote" value="1" id="opt1-{{ $post->id }}" checked>
+                                    <label class="form-check-label" for="opt1-{{ $post->id }}">
+                                        {{ $post->poll->option_one }}
+                                    </label>
+                                </div>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="radio" name="vote" value="2" id="opt2-{{ $post->id }}">
+                                    <label class="form-check-label" for="opt2-{{ $post->id }}">
+                                        {{ $post->poll->option_two }}
+                                    </label>
+                                </div>
+
+                                <!-- ✅ ADD THIS BLOCK BELOW -->
+                                <div class="poll-results mt-3">
+                                    <p class="text-muted mb-0">Current Votes:</p>
+                                    <p>{{ $post->poll->option_one }}: {{ $post->poll->votes_one }} votes</p>
+                                    <p>{{ $post->poll->option_two }}: {{ $post->poll->votes_two }} votes</p>
+                                </div>
+                                <!-- ✅ END BLOCK -->
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Vote</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                @endif
+
+
             @endforeach
         </div>
     </div>
 
     <script src="{{ asset('js/mainPage.js') }}"></script>
-
 </body>
 </html>

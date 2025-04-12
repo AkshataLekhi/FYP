@@ -6,6 +6,8 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\PollController;
+
 
 
 // Landing page
@@ -60,3 +62,4 @@ Route::post('/posts/{post}/unsave', [PostController::class, 'unsave'])->name('po
 Route::put('/posts/{id}', [PostController::class, 'update']);
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 
+Route::post('/poll/vote', [PollController::class, 'vote'])->name('poll.vote');

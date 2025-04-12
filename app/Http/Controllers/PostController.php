@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Poll;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -12,6 +13,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        // $posts = Post::with('poll')->get();
         return view('mainPage', compact('posts'));
     }
 
@@ -22,23 +24,34 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'description' => 'required|string|max:1000',
-        'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-    $imagePath = $request->file('picture')->store('images', 'public');
+        $imagePath = $request->file('picture')->store('images', 'public');
 
-    Post::create([
-        'title' => $request->title,
-        'description' => $request->description,
-        'picture' => $imagePath,
-        'user_id' => Auth::id(),
-    ]);
+        // Create post with logged-in user ID
+        $post = Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'picture' => $imagePath,
+            'user_id' => Auth::id(), // make sure user is logged in
+        ]);
 
-    return redirect()->route('mainPage')->with('success', 'Post uploaded successfully!');
+        // Optional Poll creation if both options are filled
+        if ($request->filled('option_one') && $request->filled('option_two')) {
+            Poll::create([
+                'post_id' => $post->id,
+                'option_one' => $request->option_one,
+                'option_two' => $request->option_two,
+            ]);
+        }
+
+        return redirect()->route('mainPage')->with('success', 'Post uploaded successfully!');
     }
+
 
     public function update(Request $request, $id)
     {
