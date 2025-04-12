@@ -59,7 +59,7 @@
                                         <i class="bi bi-bar-chart"></i>
                                     </button>
                                 @endif
-                                
+
                                 <div class="action-buttons ms-auto d-flex gap-2">
                                     <a href="#" class="action-btn like-btn" data-post-id="{{ $post->id }}">
                                         <i class="bi bi-heart"></i>
@@ -67,7 +67,7 @@
                                     </a>
                                     <a href="#" class="action-btn comment-btn" data-bs-toggle="modal" data-bs-target="#commentModal-{{ $post->id }}">
                                         <i class="bi bi-chat"></i>
-                                        <span class="comment-count">{{ $post->comments_count ?? 0 }}</span>
+                                        <span class="comment-count">{{ $post->comments_count}}</span>
                                     </a>
                                     <a href="#" class="action-btn save-btn" data-post-id="{{ $post->id }}">
                                         <i class="bi bi-bookmark"></i>
@@ -109,32 +109,45 @@
 
                 <!-- Comment Modal -->
                 <div class="modal fade" id="commentModal-{{ $post->id }}" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Comments on "{{ $post->title }}"</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-dialog modal-dialog-centered">
+                        <form action="{{ route('comments.store') }}" method="POST" class="modal-content shadow-lg border-0 rounded-4">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{ $post->id }}">
+
+                            <div class="modal-header border-0 pb-0">
+                                <h5 class="modal-title fw-semibold">Comments on <span class="text-danger">"{{ $post->title }}"</span></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
 
-                            <div class="modal-body">
-                                <div class="comments-section">
-                                    @if(!empty($post->comments) && $post->comments->count())
+                            <div class="modal-body pt-0">
+                                <div class="comments-section mb-4" style="max-height: 250px; overflow-y: auto;">
+                                    @if($post->comments->count())
                                         @foreach($post->comments as $comment)
-                                            <div class="comment">
-                                                <strong>{{ $comment->user->name }}</strong>
-                                                <p>{{ $comment->content }}</p>
-                                                <small class="text-muted">{{ $comment->created_at->diffForHumans() }}</small>
+                                            <div class="mb-3">
+                                                <div class="fw-bold text-dark">{{ $comment->user->name }}</div>
+                                                <div class="text-muted">{{ $comment->content }}</div>
+                                                <small class="text-secondary fst-italic">{{ $comment->created_at->diffForHumans() }}</small>
                                             </div>
-                                            <hr>
+                                            <hr class="text-secondary">
                                         @endforeach
                                     @else
-                                        <p>No comments yet.</p>
+                                        <p class="text-muted">No comments yet. Be the first to comment!</p>
                                     @endif
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="commentContent-{{ $post->id }}" class="fw-semibold mb-1">Add a Comment:</label>
+                                    <textarea name="content" class="form-control rounded-3 shadow-sm" id="commentContent-{{ $post->id }}" rows="3" placeholder="Write something nice..." required></textarea>
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="modal-footer border-0 pt-0">
+                                <button type="submit" class="btn btn-danger rounded-pill px-4">Comment</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
+
 
                 <!-- Poll Modal -->
                 @if($post->poll)
@@ -144,7 +157,7 @@
                             @csrf
                             <input type="hidden" name="poll_id" value="{{ $post->poll->id }}">
                             <div class="modal-header">
-                                <h5 class="modal-title">Vote in Poll</h5>
+                                <h5 class="modal-title">Participate in Poll</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
 

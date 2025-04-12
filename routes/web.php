@@ -63,3 +63,6 @@ Route::put('/posts/{id}', [PostController::class, 'update']);
 Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 
 Route::post('/poll/vote', [PollController::class, 'vote'])->name('poll.vote');
+
+Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+
