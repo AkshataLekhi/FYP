@@ -7,7 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PollController;
-
+use App\Http\Controllers\CommentController;
 
 
 // Landing page
@@ -64,5 +64,5 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.de
 
 Route::post('/poll/vote', [PollController::class, 'vote'])->name('poll.vote');
 
-Route::post('/comments', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 

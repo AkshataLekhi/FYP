@@ -20,9 +20,15 @@
         <a class="logo" href="#">
             <img src="{{ asset('images/Logo.png') }}" alt="Logo">
         </a>
-        <a href="#" class="active">Home</a>
+        <a href="{{ route('mainPage') }}" class="active">Home</a>
         <a href="{{ route('create') }}">Create</a>
-        <input type="search" name="search" class="search" id="searchInput" placeholder="Search">
+
+        {{-- <input type="search" name="search" class="search" id="searchInput" placeholder="Search"> --}}
+
+        <form method="GET" action="{{ route('mainPage') }}" class="d-flex align-items-center">
+            <input type="search" name="search" class="search form-control me-2" id="searchInput" placeholder="Search posts..." value="{{ request('search') }}">
+        </form>
+
         <div class="nav-icons">
             <a href="{{ route('account') }}"><i class="bi bi-person-fill"></i></a>
             <a href="#"><i class="bi bi-bell-fill"></i></a>

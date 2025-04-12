@@ -10,12 +10,26 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    public function index()
-    {
-        $posts = Post::all();
-        // $posts = Post::with('poll')->get();
-        return view('mainPage', compact('posts'));
+    // public function index()
+    // {
+    //     $posts = Post::all();
+    //     // $posts = Post::with('poll')->get();
+    //     return view('mainPage', compact('posts'));
+    // }
+
+    public function index(Request $request)
+{
+    $query = Post::with('poll', 'comments');
+
+    if ($request->has('search') && !empty($request->search)) {
+        $query->where('title', 'like', '%' . $request->search . '%');
     }
+
+    $posts = $query->get();
+
+    return view('mainPage', compact('posts'));
+}
+
 
     public function create()
     {
