@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
@@ -19,6 +20,16 @@ class LikeController extends Controller
         } else {
             $post->likes()->attach($user->id);
             $liked = true;
+
+            // Send notification to the post owner (avoid self-notification)
+            if ($post->user_id != $user->id) {
+                Notification::create([
+                    'user_id' => $post->user_id, // receiver
+                    'post_id' => $post->id,
+                    'type' => 'like',
+                    'message' => $user->name . ' liked your post.',
+                ]);
+            }
         }
 
         $likeCount = $post->likes()->count();
@@ -29,4 +40,3 @@ class LikeController extends Controller
         ]);
     }
 }
-

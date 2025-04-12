@@ -5,19 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Poll;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 
 
 class PostController extends Controller
 {
-    // public function index()
-    // {
-    //     $posts = Post::all();
-    //     // $posts = Post::with('poll')->get();
-    //     return view('mainPage', compact('posts'));
-    // }
-
-
     public function index(Request $request)
 {
     $query = Post::with('poll', 'comments', 'likes');
@@ -28,7 +21,14 @@ class PostController extends Controller
 
     $posts = $query->get();
 
-    return view('mainPage', compact('posts'));
+    // 👇 Add this to fetch notifications for the logged-in user
+    $notifications = Notification::where('user_id', Auth::id())
+                        ->latest()
+                        ->take(10)
+                        ->get();
+
+    // 👇 Pass $notifications to the view
+    return view('mainPage', compact('posts', 'notifications'));
 }
 
     public function create()

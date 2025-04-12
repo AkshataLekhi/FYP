@@ -31,7 +31,30 @@
 
         <div class="nav-icons">
             <a href="{{ route('account') }}"><i class="bi bi-person-fill"></i></a>
-            <a href="#"><i class="bi bi-bell-fill"></i></a>
+
+            {{-- <a href="#"><i class="bi bi-bell-fill"></i></a> --}}
+
+            {{-- Notification Section --}}
+            <div class="notification-wrapper position-relative">
+                <i class="bi bi-bell notification-bell" onclick="toggleNotificationBox()"></i>
+
+                @if($notifications->where('is_read', false)->count())
+                    <span class="notif-dot"></span>
+                @endif
+
+                <div class="notif-popup" id="notifPopup" style="display: none;">
+                    @forelse ($notifications as $notif)
+                        <div class="notif-card" onclick="markAsRead({{ $notif->id }})">
+                            <div class="notif-message">{{ $notif->message }}</div>
+                            <div class="notif-time text-muted small">{{ $notif->created_at->diffForHumans() }}</div>
+                        </div>
+                    @empty
+                        <div class="notif-card text-muted">No notifications yet..</div>
+                    @endforelse
+                </div>
+            </div>
+
+
             <a href="{{ url('/chatify') }}"><i class="bi bi-chat-heart-fill"></i></a>
             <a href="#"><i class="bi bi-clock-history"></i></a>
             <a href="#" onclick="document.getElementById('logout-form').submit();" style="cursor: pointer;">
@@ -67,21 +90,17 @@
                                 @endif
 
                                 <div class="action-buttons ms-auto d-flex gap-2">
-                                    {{-- <a href="#" class="action-btn like-btn" data-post-id="{{ $post->id }}">
-                                        <i class="bi bi-heart"></i>
-                                        <span class="like-count">{{ $post->likes_count ?? 0 }}</span>
-                                    </a> --}}
 
                                     <a href="#" class="action-btn like-btn" data-post-id="{{ $post->id }}">
                                         <i class="bi {{ $post->likes->contains(auth()->id()) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
                                         <span class="like-count">{{ $post->likes->count() }}</span>
                                     </a>
 
-
                                     <a href="#" class="action-btn comment-btn" data-bs-toggle="modal" data-bs-target="#commentModal-{{ $post->id }}">
                                         <i class="bi bi-chat"></i>
                                         <span class="comment-count">{{ $post->comments_count}}</span>
                                     </a>
+
                                     <a href="#" class="action-btn save-btn" data-post-id="{{ $post->id }}">
                                         <i class="bi bi-bookmark"></i>
                                     </a>

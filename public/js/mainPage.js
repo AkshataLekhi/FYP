@@ -155,3 +155,12 @@ document.addEventListener('DOMContentLoaded', function () {
         return new bootstrap.Tooltip(el);
     });
 });
+
+// Notification
+
+    function toggleNotificationBox() {
+        const popup = document.getElementById('notifPopup');
+        popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
+    }
+
+
