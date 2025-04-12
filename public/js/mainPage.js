@@ -1,50 +1,46 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Like functionality
-    document.querySelectorAll('.like-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+document.addEventListener('DOMContentLoaded', function () {
+
+    // LIKE FUNCTIONALITY (❤️)
+    document.querySelectorAll('.like-btn').forEach(button => {
+        button.addEventListener('click', async function (e) {
             e.preventDefault();
+
             const postId = this.dataset.postId;
-            const likeCount = this.querySelector('.like-count');
+            const icon = this.querySelector('i');
+            const countSpan = this.querySelector('.like-count');
+            const token = document.querySelector('meta[name="csrf-token"]').content;
 
-            // Toggle like state
-            this.classList.toggle('liked');
-            const isLiked = this.classList.contains('liked');
+            try {
+                const response = await fetch("/like", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': token,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ post_id: postId })
+                });
 
-            // Update like count
-            const currentCount = parseInt(likeCount.textContent);
-            likeCount.textContent = isLiked ? currentCount + 1 : currentCount - 1;
+                const data = await response.json();
 
-            // Send AJAX request
-            fetch(`/posts/${postId}/like`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ liked: isLiked })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    likeCount.textContent = data.likes_count;
+                if (data.liked) {
+                    icon.classList.remove('bi-heart');
+                    icon.classList.add('bi-heart-fill');
                 } else {
-                    // Revert UI if failed
-                    this.classList.toggle('liked');
-                    likeCount.textContent = currentCount;
+                    icon.classList.remove('bi-heart-fill');
+                    icon.classList.add('bi-heart');
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                this.classList.toggle('liked');
-                likeCount.textContent = currentCount;
-            });
+
+                countSpan.textContent = data.likeCount;
+            } catch (error) {
+                console.error('Like failed:', error);
+            }
         });
     });
 
-    // Comment form submission
+    // COMMENT FUNCTIONALITY (💬)
     document.querySelectorAll('.add-comment-form').forEach(form => {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', function (e) {
             e.preventDefault();
             const postId = this.dataset.postId;
             const formData = new FormData(this);
@@ -62,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Add new comment to the list
                     const newComment = document.createElement('div');
                     newComment.innerHTML = `
                         <div class="comment">
@@ -74,12 +69,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                     commentSection.appendChild(newComment);
 
-                    // Update comment count
                     if (commentCount) {
                         commentCount.textContent = parseInt(commentCount.textContent) + 1;
                     }
 
-                    // Clear form
                     this.reset();
                 }
             })
@@ -87,19 +80,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Delete functionality
+    // DELETE POST FUNCTIONALITY (🗑️)
     let postToDelete = null;
     const deleteConfirmModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
 
     document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener('click', function (e) {
             e.preventDefault();
             postToDelete = this.dataset.postId;
             deleteConfirmModal.show();
         });
     });
 
-    document.getElementById('confirmDelete').addEventListener('click', function() {
+    document.getElementById('confirmDelete').addEventListener('click', function () {
         if (!postToDelete) return;
 
         fetch(`/posts/${postToDelete}`, {
@@ -124,70 +117,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize Bootstrap tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-});
-document.addEventListener('DOMContentLoaded', () => {
-    const likeButtons = document.querySelectorAll('.like-btn');
-
-    // Get liked posts from localStorage
-    let likedPostData = JSON.parse(localStorage.getItem('likedPosts')) || {};
-
-    // Show already liked posts and counts
-    likeButtons.forEach(button => {
-        const postId = button.dataset.postId;
-        const icon = button.querySelector('i');
-        const countSpan = button.querySelector('.like-count');
-
-        if (likedPostData[postId]) {
-            icon.classList.remove('bi-heart');
-            icon.classList.add('bi-heart-fill');
-            countSpan.textContent = likedPostData[postId];
-        }
-    });
-
-    // Handle like/unlike
-    likeButtons.forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            const postId = this.dataset.postId;
-            const icon = this.querySelector('i');
-            const countSpan = this.querySelector('.like-count');
-
-            let count = parseInt(countSpan.textContent);
-
-            if (likedPostData[postId]) {
-                // Unlike
-                delete likedPostData[postId];
-                icon.classList.remove('bi-heart-fill');
-                icon.classList.add('bi-heart');
-                count = Math.max(0, count - 1);
-            } else {
-                // Like
-                likedPostData[postId] = count + 1;
-                icon.classList.remove('bi-heart');
-                icon.classList.add('bi-heart-fill');
-                count = count + 1;
-            }
-
-            countSpan.textContent = count;
-            localStorage.setItem('likedPosts', JSON.stringify(likedPostData));
-        });
-    });
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
+    // SAVE POST FUNCTIONALITY (🔖)
     const saveButtons = document.querySelectorAll('.save-btn');
-
-    // Load saved posts from localStorage
     let savedPostIds = JSON.parse(localStorage.getItem('savedPosts')) || [];
 
-    // Highlight already saved posts
     savedPostIds.forEach(id => {
         const icon = document.querySelector(`.save-btn[data-post-id="${id}"] i`);
         if (icon) {
@@ -196,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Handle save button clicks
     saveButtons.forEach(button => {
         button.addEventListener('click', function (e) {
             e.preventDefault();
@@ -204,24 +136,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const icon = this.querySelector('i');
 
             if (savedPostIds.includes(postId)) {
-                // Unsave
                 savedPostIds = savedPostIds.filter(id => id !== postId);
                 icon.classList.remove('bi-bookmark-fill');
                 icon.classList.add('bi-bookmark');
             } else {
-                // Save
                 savedPostIds.push(postId);
                 icon.classList.remove('bi-bookmark');
                 icon.classList.add('bi-bookmark-fill');
             }
 
-            // Store in localStorage
             localStorage.setItem('savedPosts', JSON.stringify(savedPostIds));
         });
     });
-});
 
-
-document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-    new bootstrap.Tooltip(el);
+    // TOOLTIPS (✨)
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (el) {
+        return new bootstrap.Tooltip(el);
+    });
 });

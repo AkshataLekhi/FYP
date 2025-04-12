@@ -8,6 +8,7 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PollController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 
 
 // Landing page
@@ -65,4 +66,6 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.de
 Route::post('/poll/vote', [PollController::class, 'vote'])->name('poll.vote');
 
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/like', [LikeController::class, 'toggle'])->name('like.toggle');
+
 

@@ -17,9 +17,10 @@ class PostController extends Controller
     //     return view('mainPage', compact('posts'));
     // }
 
+
     public function index(Request $request)
 {
-    $query = Post::with('poll', 'comments');
+    $query = Post::with('poll', 'comments', 'likes');
 
     if ($request->has('search') && !empty($request->search)) {
         $query->where('title', 'like', '%' . $request->search . '%');
@@ -29,7 +30,6 @@ class PostController extends Controller
 
     return view('mainPage', compact('posts'));
 }
-
 
     public function create()
     {

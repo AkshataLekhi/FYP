@@ -26,7 +26,7 @@
         {{-- <input type="search" name="search" class="search" id="searchInput" placeholder="Search"> --}}
 
         <form method="GET" action="{{ route('mainPage') }}" class="d-flex align-items-center">
-            <input type="search" name="search" class="search form-control me-2" id="searchInput" placeholder="Search posts..." value="{{ request('search') }}">
+            <input type="search" name="search" class="search" id="searchInput" placeholder="Search..." value="{{ request('search') }}">
         </form>
 
         <div class="nav-icons">
@@ -61,16 +61,23 @@
                                 </button>
 
                                 @if($post->poll)
-                                    <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#pollModal-{{ $post->id }}" title="Vote Now!">
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#pollModal-{{ $post->id }}" title="Vote Now!">
                                         <i class="bi bi-bar-chart"></i>
                                     </button>
                                 @endif
 
                                 <div class="action-buttons ms-auto d-flex gap-2">
-                                    <a href="#" class="action-btn like-btn" data-post-id="{{ $post->id }}">
+                                    {{-- <a href="#" class="action-btn like-btn" data-post-id="{{ $post->id }}">
                                         <i class="bi bi-heart"></i>
                                         <span class="like-count">{{ $post->likes_count ?? 0 }}</span>
+                                    </a> --}}
+
+                                    <a href="#" class="action-btn like-btn" data-post-id="{{ $post->id }}">
+                                        <i class="bi {{ $post->likes->contains(auth()->id()) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+                                        <span class="like-count">{{ $post->likes->count() }}</span>
                                     </a>
+
+
                                     <a href="#" class="action-btn comment-btn" data-bs-toggle="modal" data-bs-target="#commentModal-{{ $post->id }}">
                                         <i class="bi bi-chat"></i>
                                         <span class="comment-count">{{ $post->comments_count}}</span>
@@ -158,46 +165,52 @@
                 <!-- Poll Modal -->
                 @if($post->poll)
                 <div class="modal fade" id="pollModal-{{ $post->id }}" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <form action="{{ route('poll.vote') }}" method="POST" class="modal-content">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <form action="{{ route('poll.vote') }}" method="POST" class="modal-content shadow border-0 rounded-4 p-3">
                             @csrf
                             <input type="hidden" name="poll_id" value="{{ $post->poll->id }}">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Participate in Poll</h5>
+
+                            <div class="modal-header border-0">
+                                <h5 class="modal-title fw-semibold text-danger">📊 Participate in Poll</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
 
                             <div class="modal-body">
-                                <!-- Voting options -->
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="vote" value="1" id="opt1-{{ $post->id }}" checked>
-                                    <label class="form-check-label" for="opt1-{{ $post->id }}">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="vote" value="1" id="poll1-{{ $post->id }}" checked>
+                                    <label class="form-check-label fs-6 fw-medium" for="poll1-{{ $post->id }}">
                                         {{ $post->poll->option_one }}
                                     </label>
                                 </div>
-                                <div class="form-check mt-2">
-                                    <input class="form-check-input" type="radio" name="vote" value="2" id="opt2-{{ $post->id }}">
-                                    <label class="form-check-label" for="opt2-{{ $post->id }}">
+
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="radio" name="vote" value="2" id="poll2-{{ $post->id }}">
+                                    <label class="form-check-label fs-6 fw-medium" for="poll2-{{ $post->id }}">
                                         {{ $post->poll->option_two }}
                                     </label>
                                 </div>
 
-                                <!-- ✅ ADD THIS BLOCK BELOW -->
-                                <div class="poll-results mt-3">
-                                    <p class="text-muted mb-0">Current Votes:</p>
-                                    <p>{{ $post->poll->option_one }}: {{ $post->poll->votes_one }} votes</p>
-                                    <p>{{ $post->poll->option_two }}: {{ $post->poll->votes_two }} votes</p>
+                                <div class="poll-results border-top pt-3 mt-3">
+                                    <p class="text-muted mb-1 fw-semibold">📈 Current Votes:</p>
+                                    <div class="d-flex justify-content-between px-2">
+                                        <span>{{ $post->poll->option_one }}:</span>
+                                        <span class="fw-bold">{{ $post->poll->votes_one }} votes</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between px-2">
+                                        <span>{{ $post->poll->option_two }}:</span>
+                                        <span class="fw-bold">{{ $post->poll->votes_two }} votes</span>
+                                    </div>
                                 </div>
-                                <!-- ✅ END BLOCK -->
                             </div>
 
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Vote</button>
+                            <div class="modal-footer border-0 pt-0">
+                                <button type="submit" class="btn btn-danger rounded-pill px-4">Vote</button>
                             </div>
                         </form>
                     </div>
                 </div>
                 @endif
+
 
 
             @endforeach
