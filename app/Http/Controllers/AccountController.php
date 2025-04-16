@@ -43,4 +43,18 @@ class AccountController extends Controller
     return redirect()->route('mainPage')->with('success', 'Post uploaded successfully!');
     }
 
+    public function delete(Request $request)
+    {
+        /**
+         * @var \App\Models\User
+         */
+        $user = Auth::user();
+
+        Auth::logout();
+        $user->delete();
+
+        return redirect('/mainPage')->with('success', 'Your account has been deleted.');
+    }
+
+
 }

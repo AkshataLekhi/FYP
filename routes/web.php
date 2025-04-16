@@ -63,4 +63,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Account page
     Route::get('/account', [AccountController::class, 'index'])->name('account');
+    Route::delete('/account/delete', [AccountController::class, 'delete'])->name('account.delete');
+
+    Route::post('/posts/temporary', [PostController::class, 'storeTemporary'])->name('posts.temporary');
+
 });

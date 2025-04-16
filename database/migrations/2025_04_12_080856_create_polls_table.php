@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('post_id')->constrained()->onDelete('cascade');
             $table->string('option_one');
             $table->string('option_two');
-            $table->integer('option_one')->default(0);
-            $table->integer('option_one')->default(0);
+            $table->integer('votes_one')->default(0);
+            $table->integer('votes_two')->default(0);
             $table->timestamps();
         });
 

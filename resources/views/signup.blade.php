@@ -10,25 +10,35 @@
 </head>
 <body>
   <div class="container">
-    <!-- Login Form -->
-    <div class="form-box login">
-      <form action="{{ url('loginUser') }}" method="POST">
-        @csrf
-        <h1>LOGIN</h1>
-        <div class="input-box">
-          <input type="email" name="email" placeholder="Email" required>
-          <i class="bi bi-envelope-fill"></i>
-        </div>
-        <div class="input-box">
-          <input type="password" name="password" placeholder="Password" required>
-          <i class="bi bi-file-lock2-fill"></i>
-        </div>
-        <div class="forgot-link">
-          <a href="#">Forgot Password?</a>
-        </div>
-        <button type="submit" class="btn">Login</button>
-      </form>
-    </div>
+<!-- Login Form -->
+<div class="form-box login">
+    <form action="{{ url('loginUser') }}" method="POST">
+      @csrf
+      <h1>LOGIN</h1>
+
+      @if(session('error'))
+        <div class="custom-alert">{{ session('error') }}</div>
+      @endif
+
+      @if(session('success'))
+        <div class="custom-alert success">{{ session('success') }}</div>
+      @endif
+
+      <div class="input-box">
+        <input type="email" name="email" placeholder="Email" required>
+        <i class="bi bi-envelope-fill"></i>
+      </div>
+      <div class="input-box">
+        <input type="password" name="password" placeholder="Password" required>
+        <i class="bi bi-file-lock2-fill"></i>
+      </div>
+      <div class="forgot-link">
+        <a href="#">Forgot Password?</a>
+      </div>
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
+
 
     <!-- Registration Form -->
     <div class="form-box register">
@@ -78,7 +88,7 @@
       </div>
     </div>
   </div>
-  
+
   <a href="{{ url('/') }}" class="back-arrow">
     <i class="bi bi-arrow-left"></i>
   </a>

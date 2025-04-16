@@ -29,5 +29,5 @@ class NotificationController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    
+
 }

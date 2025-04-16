@@ -6,21 +6,78 @@ body {
     text-align: center;
 }
 
-.profile-section {
-    margin-top: 50px;
-}
+/* .profile-section {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    margin: 30px auto;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+} */
 
-.profile-section h2 {
-    margin-bottom: 20px;
+.profile-heading {
     font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.profile-pic {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.btn-edit,
+.btn-delete {
+    min-width: 160px;
+    text-decoration: none;
+    text-align: center;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 16px;
+}
+
+/* Edit Button */
+.btn-edit {
+    background-color: #ffffff;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.btn-edit:hover {
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
+}
+
+/* Delete Button */
+.btn-delete {
     background-color: white;
-    display: inline-block;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.btn-delete:hover {
+    background-color: #dc3545;
+    color: white;
+    text-decoration: none;
 }
 
 .edit-btn {

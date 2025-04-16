@@ -293,3 +293,20 @@ form {
 }
 
 
+.custom-alert {
+    background-color: #ffe0e0;
+    color: #d8000c;
+    padding: 10px 15px;
+    border: 1px solid #d8000c;
+    border-radius: 6px;
+    font-size: 14px;
+    margin: 10px auto 15px;
+    text-align: center;
+    max-width: 300px;
+  }
+
+  .custom-alert.success {
+    background-color: #e0f7e9;
+    color: #007e33;
+    border-color: #007e33;
+  }

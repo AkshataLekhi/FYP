@@ -8,27 +8,25 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="{{ asset('css/signup.css') }}">
   <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+
 </head>
+
 <body>
   <div class="container">
+    <!-- Login Form -->
     <div class="form-box login">
-      <!-- Flash messages -->
-      @if(session()->has('success'))
-        <div class="alert alert-success">
-          <p>{{ session()->get('success') }}</p>
-        </div>
-      @endif
-
-      @if(session()->has('error'))
-        <div class="alert alert-danger">
-          <p>{{ session()->get('error') }}</p>
-        </div>
-      @endif
-
-      {{-- <form action="{{ url('loginUser') }}" method="POST"> --}}
-        <form method="POST" action="{{ url('/loginUser') }}">
+      <form method="POST" action="{{ url('/loginUser') }}">
         @csrf
         <h1>LOGIN</h1>
+
+        @if(session('success'))
+          <div class="custom-alert success">{{ session('success') }}</div>
+        @endif
+
+        @if(session('error'))
+          <div class="custom-alert">{{ session('error') }}</div>
+        @endif
+
         <div class="input-box">
           <input type="email" name="email" placeholder="Email" required>
           <i class="bi bi-envelope-fill"></i>
@@ -41,9 +39,10 @@
           <a href="#">Forgot Password?</a>
         </div>
         <button type="submit" class="btn">Login</button>
-    </form>
+      </form>
     </div>
 
+    <!-- Register Form -->
     <div class="form-box register">
       <form action="{{ url('signupUser') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -78,6 +77,7 @@
       </form>
     </div>
 
+    <!-- Panel Toggle -->
     <div class="toggle-box">
       <div class="toggle-panel toggle-left">
         <h1>Hello, Again</h1>
@@ -91,9 +91,14 @@
       </div>
     </div>
   </div>
+
+  <!-- Back Arrow -->
   <a href="/" class="back-arrow">
     <i class="bi bi-arrow-left"></i>
   </a>
+
+  <!-- JS -->
   <script src="{{ asset('js/signup.js') }}"></script>
+
 </body>
 </html>

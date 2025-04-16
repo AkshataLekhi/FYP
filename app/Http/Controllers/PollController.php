@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Poll;
+use App\Models\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PollController extends Controller
 {
@@ -14,7 +16,7 @@ class PollController extends Controller
             'vote' => 'required|in:1,2'
         ]);
 
-        $poll = Poll::findOrFail($request->poll_id);
+        $poll = Poll::with('post')->findOrFail($request->poll_id); // Load the post
 
         if ($request->vote == 1) {
             $poll->increment('votes_one');
@@ -22,7 +24,18 @@ class PollController extends Controller
             $poll->increment('votes_two');
         }
 
+        // Send notification to the post owner if it's not the voter
+        $postOwnerId = $poll->post->user_id;
+
+        if (Auth::id() !== $postOwnerId) {
+            Notification::create([
+                'user_id' => $postOwnerId,
+                'post_id' => $poll->post_id,
+                'type' => 'poll',
+                'message' => Auth::user()->name . ' voted on your post'
+            ]);
+        }
+
         return back()->with('success', 'Thanks for voting!');
     }
-
 }

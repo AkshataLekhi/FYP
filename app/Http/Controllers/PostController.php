@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Poll;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 
 class PostController extends Controller
@@ -92,5 +93,25 @@ class PostController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function storeTemporary(Request $request)
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'required|string',
+        'picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        'duration' => 'required|in:1,24',
+    ]);
+
+    $imagePath = $request->file('picture')->store('images', 'public');
+
+    Post::create([
+        'title' => $request->title,
+        'description' => $request->description,
+        'picture' => $imagePath,
+        'expires_at' => now()->addHours($request->duration),
+    ]);
+
+    return redirect()->back()->with('success', 'Temporary post created!');
+}
 
 }

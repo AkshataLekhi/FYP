@@ -24,10 +24,11 @@ class LikeController extends Controller
             // Send notification to the post owner (avoid self-notification)
             if ($post->user_id != $user->id) {
                 Notification::create([
-                    'user_id' => $post->user_id, // receiver
+                    'user_id' => $post->user_id, 
                     'post_id' => $post->id,
                     'type' => 'like',
-                    'message' => $user->name . ' liked your post.',
+                    'message' => Auth::user()->name . ' liked on "' . $post->title . '".'
+
                 ]);
             }
         }

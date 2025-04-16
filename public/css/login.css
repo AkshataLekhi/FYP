@@ -293,3 +293,19 @@ form {
 }
 
 
+.custom-alert {
+    background-color: #ffe0e0;
+    color: #d8000c;
+    padding: 10px 16px;
+    border: 1px solid #d8000c;
+    border-radius: 6px;
+    margin: 10px 0 15px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .custom-alert.success {
+    background-color: #e0f7e9;
+    color: #007e33;
+    border-color: #007e33;
+  }
