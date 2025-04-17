@@ -130,31 +130,40 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     saveButtons.forEach(button => {
-        button.addEventListener('click', function (e) {
+        button.addEventListener('click', async function (e) {
             e.preventDefault();
             const postId = this.dataset.postId;
             const icon = this.querySelector('i');
+            const token = document.querySelector('meta[name="csrf-token"]').content;
+            const isSaved = icon.classList.contains('bi-bookmark-fill');
 
-            if (savedPostIds.includes(postId)) {
-                savedPostIds = savedPostIds.filter(id => id !== postId);
-                icon.classList.remove('bi-bookmark-fill');
-                icon.classList.add('bi-bookmark');
-            } else {
-                savedPostIds.push(postId);
-                icon.classList.remove('bi-bookmark');
-                icon.classList.add('bi-bookmark-fill');
+            try {
+                const response = await fetch(`/posts/${postId}/${isSaved ? 'unsave' : 'save'}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': token,
+                        'Accept': 'application/json',
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    icon.classList.toggle('bi-bookmark-fill');
+                    icon.classList.toggle('bi-bookmark');
+                }
+            } catch (error) {
+                console.error('Error saving post:', error);
             }
-
-            localStorage.setItem('savedPosts', JSON.stringify(savedPostIds));
         });
     });
+});
 
-    // TOOLTIPS (✨)
+// TOOLTIPS (✨)
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (el) {
         return new bootstrap.Tooltip(el);
     });
-});
 
 // Notification
 
@@ -163,4 +172,31 @@ document.addEventListener('DOMContentLoaded', function () {
         popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'block' : 'none';
     }
 
+    document.querySelectorAll('.follow-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const userId = this.getAttribute('data-user-id');
+            const btn = this;
 
+            fetch(`/follow/${userId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'followed') {
+                    btn.innerHTML = '<i class="bi bi-person-check-fill"></i> Following';
+                    btn.classList.remove('btn-outline-primary');
+                    btn.classList.add('btn-success');
+                } else if (data.status === 'unfollowed') {
+                    btn.innerHTML = '<i class="bi bi-person-plus-fill"></i> Follow';
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-outline-primary');
+                }
+            })
+            .catch(err => console.error(err));
+        });
+    });

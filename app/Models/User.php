@@ -2,42 +2,22 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-
-use App\Models\Post;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
-    use HasFactory;
-    // use HasProfilePhoto;
-    use Notifiable;
-    // use TwoFactorAuthenticatable;
+    use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'fullname',
         'email',
-        'number',
         'password',
         'picture'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -45,48 +25,24 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array<int, string>
-     */
-    // protected $appends = [
-    //     'profile_photo_url',
-    // ];
-
     public function getNameAttribute()
     {
-    return $this->fullname; // assuming your table has 'fullname'
+        return $this->fullname;
     }
 
-    public function posts()
+    // ✅ Followings relationship
+    public function followings()
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
     }
 
-    public function comments()
+    // ✅ Optional: Followers relationship
+    public function followers()
     {
-        return $this->hasMany(Comment::class);
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
     }
-
-    public function likedPosts()
-    {
-        return $this->belongsToMany(Post::class, 'likes')->withTimestamps();
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(\App\Models\User::class);
-    }
-
-
 }

@@ -60,10 +60,6 @@
           <i class="bi bi-envelope-fill"></i>
         </div>
         <div class="input-box">
-          <input type="text" name="number" placeholder="Contact Number" required>
-          <i class="bi bi-telephone-fill"></i>
-        </div>
-        <div class="input-box">
           <input type="password" name="password" placeholder="Password" required>
           <i class="bi bi-file-lock2-fill"></i>
         </div>

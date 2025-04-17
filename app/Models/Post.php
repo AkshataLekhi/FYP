@@ -17,13 +17,13 @@ class Post extends Model
         'user_id',
     ];
 
-    // ✅ Relationship: Post belongs to a user
+    // ✅ Post belongs to a user
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // ✅ Relationship: Post has one poll
+    // ✅ Post has one poll
     public function poll()
     {
         return $this->hasOne(Poll::class);
@@ -38,7 +38,4 @@ class Post extends Model
     {
         return $this->belongsToMany(User::class, 'likes')->withTimestamps();
     }
-
-
-
 }

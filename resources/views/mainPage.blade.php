@@ -54,9 +54,14 @@
                 </div>
             </div>
 
-
+            {{-- Chatify --}}
             <a href="{{ url('/chatify') }}"><i class="bi bi-chat-heart-fill"></i></a>
-            <a href="#"><i class="bi bi-clock-history"></i></a>
+
+            <!-- Story Icon (Trigger) -->
+            <a href="#" data-bs-toggle="modal" data-bs-target="#storyModal">
+                <i class="bi bi-clock-history"></i>
+            </a>
+
             <a href="#" onclick="document.getElementById('logout-form').submit();" style="cursor: pointer;">
                 <i class="bi bi-box-arrow-right"></i>
             </a>
@@ -75,8 +80,21 @@
                     <div class="card">
                         <img src="{{ asset('storage/' . $post->picture) }}" class="card-img-top" alt="{{ $post->title }}">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $post->title }}</h5>
-                            <p class="card-text">{{ $post->description }}</p>
+
+                            <div class="fw-bold d-flex justify-content-between align-items-center">
+                                <span>Post By: {{ $post->user->name }}</span>
+
+                                {{-- Follow icon/button --}}
+                                <button class="btn btn-outline-danger btn-sm follow-btn"
+                                    data-user-id="{{ $post->user->id }}">
+                                    <i class="bi bi-person-plus-fill"></i> Follow
+                                </button>
+
+                            </div>
+
+                                 <h5 class="card-title">{{ $post->title }}</h5>
+                                <p class="card-text">{{ $post->description }}</p>
+                                {{-- <p class="text-muted small">Posted {{ $post->created_at->diffForHumans() }}</p> --}}
 
                             <div class="card-actions d-flex align-items-center gap-2">
                                 <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#ratingModal-{{ $post->id }}">
@@ -104,6 +122,7 @@
                                     <a href="#" class="action-btn save-btn" data-post-id="{{ $post->id }}">
                                         <i class="bi bi-bookmark"></i>
                                     </a>
+
                                 </div>
                             </div>
                         </div>
@@ -229,10 +248,61 @@
                     </div>
                 </div>
                 @endif
-
-
-
             @endforeach
+
+            <!-- Story Upload Modal -->
+            <div class="modal fade" id="storyModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <form method="POST" action="{{ route('stories.store') }}" enctype="multipart/form-data" class="modal-content">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" name="title" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Image</label>
+                                <input type="file" name="media" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit">Post</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Story Display Section -->
+            @if($stories->count())
+    <div class="container mt-5">
+        <div class="d-flex flex-wrap gap-4">
+            @foreach($stories as $story)
+                <div class="card story-card border-0 shadow-sm rounded-4 overflow-hidden" style="width: 220px;">
+                    <img src="{{ asset('storage/' . $story->picture) }}"
+                         class="story-img"
+                         alt="Story Image">
+
+                    <div class="card-body text-center bg-light">
+                        <h4 class="card-title mb-2 text-truncate" title="{{ $story->title }}">
+                            {{ $story->title }}
+                        </h4>
+                        <h7 class="fw mb-4">Temporary Post</h7>
+                        <p class="text-muted small mb-0">
+                            @if (\Carbon\Carbon::parse($story->expires_at)->isPast())
+                                Expired
+                            @else
+                                Expires in {{ \Carbon\Carbon::parse($story->expires_at)->diffForHumans(now(), true) }}
+                            @endif
+                        </p>
+
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+@endif
+
         </div>
     </div>
 

@@ -109,7 +109,6 @@ class MainController extends Controller
         $newUser = new User();
         $newUser->fullname = $data->input('fullname');
         $newUser->email = $data->input('email');
-        $newUser->number = $data->input('number');
         // Hash the password before saving.
         $newUser->password = bcrypt($data->input('password'));
 

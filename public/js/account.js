@@ -76,23 +76,34 @@
     });
 
 
-    document.querySelectorAll('.tab-link').forEach(tab => {
-        tab.addEventListener('click', function (e) {
+    document.querySelectorAll('.tab-link').forEach(link => {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
 
             // Remove active class from all tabs
-            document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-link').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // Add active class to clicked tab
             this.classList.add('active');
 
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
-            // Show selected tab content
-            const targetId = this.getAttribute('data-target');
-            document.getElementById(targetId).classList.add('active');
+            // Show the corresponding tab content
+            const target = this.getAttribute('data-target');
+            document.getElementById(target).style.display = 'block';
         });
     });
 
+    // Show the first tab content by default
+    document.querySelectorAll('.tab-content').forEach((el, index) => {
+        el.style.display = index === 0 ? 'block' : 'none';
+    });
+    
     // Show posts by default
     document.getElementById('posts').classList.add('active');
 

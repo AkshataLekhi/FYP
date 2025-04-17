@@ -1,0 +1,198 @@
+/* ---------- GLOBAL STYLES ---------- */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* ---------- MAIN POST DETAIL ---------- */
+.img-fluid {
+    max-height: 600px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h4 {
+    font-weight: 600;
+    color: #222;
+}
+
+p {
+    font-size: 15px;
+    color: #555;
+}
+
+/* ---------- POST META INFO ---------- */
+.btn-light {
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.btn-light:hover {
+    background-color: #eee;
+}
+
+.btn-outline-danger {
+    border-radius: 30px;
+    padding: 5px 12px;
+}
+
+.btn-danger {
+    border-radius: 30px;
+    padding: 6px 18px;
+}
+
+.text-muted small {
+    font-size: 12px;
+}
+
+/* ---------- COMMENT BOX ---------- */
+form input[type='text'] {
+    border-radius: 30px;
+    padding: 10px 20px;
+}
+
+form textarea {
+    border-radius: 16px;
+    padding: 12px;
+}
+
+.comment-box {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.comment-box strong {
+    color: #333;
+}
+
+.comment-box p {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+/* ---------- SIMILAR POSTS (Pinterest Grid) ---------- */
+.pinterest-card {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.pinterest-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pinterest-card img {
+    height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #222;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* ---------- ICON BUTTONS ---------- */
+.like-btn,
+.save-btn {
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.like-btn:hover,
+.save-btn:hover {
+    color: #dc3545;
+}
+
+.bi-heart-fill {
+    color: #dc3545;
+}
+
+.bi-bookmark {
+    color: #666;
+}
+
+.bi-chat {
+    color: #666;
+}
+
+/* ---------- MODALS ---------- */
+.modal-header,
+.modal-footer {
+    border: none;
+}
+
+.rating-css {
+    text-align: center;
+}
+
+.rating-css input {
+    display: none;
+}
+
+.rating-css label {
+    font-size: 26px;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0 5px;
+    transition: color 0.3s;
+}
+
+.rating-css input:checked ~ label,
+.rating-css label:hover,
+.rating-css label:hover ~ label {
+    color: #ffc107;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    .img-fluid {
+        max-height: 300px;
+    }
+
+    .pinterest-card img {
+        height: 180px;
+    }
+}
+
+/* Rating System */
+.rating-css div {
+    color: #ff411b;
+    font-size: 30px;
+    font-family: sans-serif;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 20px 0;
+}
+
+.rating-css input {
+    display: none;
+}
+
+.rating-css input+label {
+    font-size: 30px;
+    text-shadow: 1px 1px 0 #ff2020;
+    cursor: pointer;
+}
+
+.rating-css input:checked+label~label {
+    color: #b4afaf;
+}
+
+.rating-css label:active {
+    transform: scale(0.8);
+    transition: 0.3s ease;
+}

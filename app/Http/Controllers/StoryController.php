@@ -2,36 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Story;
-
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class StoryController extends Controller
 {
-    // Fetch active stories
-    public function index()
-    {
-        $stories = Story::active()->with('user')->get();
-        return response()->json($stories);
-    }
 
-    // Store a new story
     public function store(Request $request)
     {
         $request->validate([
-            'media' => 'required|file|mimes:jpeg,png,jpg,mp4|max:10240',
-            'media_type' => 'required|in:image,video',
+            'title' => 'required|string|max:255',
+            'media' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if (!$request->hasFile('media') || !$request->file('media')->isValid()) {
+            return back()->with('error', 'Media upload failed.');
+        }
 
         $path = $request->file('media')->store('stories', 'public');
 
-        $story = Story::create([
+        Story::create([
             'user_id' => auth()->id(),
-            'media_path' => $path,
-            'media_type' => $request->media_type,
+            'title' => $request->title,
+            'picture' => $path,
+            // 'expires_at' => now()->addHour(),
+            'expires_at' => now()->addMinutes(10), // ✅ NEW (expires in 10 minutes)
+
         ]);
 
-        return response()->json(['message' => 'Story posted successfully', 'story' => $story]);
+        return back()->with('success', 'Story posted!');
     }
-}
 
+}
