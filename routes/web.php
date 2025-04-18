@@ -11,6 +11,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StoryController;
+use App\Http\Controllers\FollowController;
 
 // Landing page
 Route::get('/', function () {
@@ -68,3 +69,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/stories', [StoryController::class, 'store'])->name('stories.store');
+
+
+
+
+
+
+
+Route::post('/follow', [PostController::class, 'followUser'])->name('follow.user');

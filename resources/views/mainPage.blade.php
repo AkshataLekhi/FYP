@@ -84,11 +84,55 @@
                             <div class="fw-bold d-flex justify-content-between align-items-center">
                                 <span>Post By: {{ $post->user->name }}</span>
 
-                                {{-- Follow icon/button --}}
                                 <button class="btn btn-outline-danger btn-sm follow-btn"
                                     data-user-id="{{ $post->user->id }}">
                                     <i class="bi bi-person-plus-fill"></i> Follow
                                 </button>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        // Select all the follow buttons
+                                        const followButtons = document.querySelectorAll('.follow-btn');
+
+                                        // Add event listener to each follow button
+                                        followButtons.forEach(function (button) {
+                                            button.addEventListener('click', function (e) {
+                                                // Get the user ID from the button's data attribute
+                                                const userIdToFollow = e.target.closest('button').getAttribute('data-user-id');
+
+                                                // Send a POST request to follow the user
+                                                fetch('{{ route('follow.user') }}', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                                    },
+                                                    body: JSON.stringify({
+                                                        user_id: userIdToFollow
+                                                    })
+                                                })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    if (data.success) {
+                                                        // If successful, update the button text or appearance
+                                                        button.innerHTML = '<i class="bi bi-person-check-fill"></i> Following';
+                                                        button.classList.remove('btn-outline-danger');
+                                                        button.classList.add('btn-outline-success');
+                                                    } else {
+                                                        alert(data.message);
+                                                    }
+                                                })
+                                                .catch(error => console.error('Error:', error));
+                                            });
+                                        });
+                                    });
+                                </script>
+
+
+
+
+
+
 
                             </div>
 

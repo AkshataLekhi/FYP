@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -34,15 +35,28 @@ class User extends Authenticatable
         return $this->fullname;
     }
 
-    // ✅ Followings relationship
+    // public function followings()
+    // {
+    //     return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+    // }
+
+    // // ✅ Optional: Followers relationship
+    // public function followers()
+    // {
+    //     return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+    // }
+
+
     public function followings()
     {
-        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+        return $this->belongsToMany(User::class, 'follows', 'follower_user_id', 'followed_user_id');
     }
 
-    // ✅ Optional: Followers relationship
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'follows', 'followed_user_id', 'follower_user_id');
     }
+
+
+
 }
