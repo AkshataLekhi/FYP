@@ -29,14 +29,14 @@ class Post extends Model
         return $this->hasOne(Poll::class);
     }
 
-    // public function comments()
-    // {
-    //     return $this->hasMany(Comment::class);
-    // }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
-    // public function likes()
-    // {
-    //     return $this->belongsToMany(User::class, 'likes')->withTimestamps();
-    // }
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
+    }
 
 }

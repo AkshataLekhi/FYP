@@ -128,7 +128,6 @@
                                     });
                                 </script>
 
-
                             </div>
 
                                  <h5 class="card-title">{{ $post->title }}</h5>
