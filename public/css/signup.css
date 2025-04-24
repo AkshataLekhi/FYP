@@ -258,7 +258,7 @@ form {
 
 }
 
-/* @media screen and (max-width:400px) {
+@media screen and (max-width:400px) {
   .form-box {
     padding: 20px;
   }
@@ -309,4 +309,4 @@ form {
     background-color: #e0f7e9;
     color: #007e33;
     border-color: #007e33;
-  } */
+  }
