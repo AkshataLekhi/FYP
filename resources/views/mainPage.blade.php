@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/mainPage.css') }}">
     <title>MAIN PAGE</title>
-</head> isjdkmAadcs
+</head>
 
 <body>
     <!-- Navigation Bar -->
@@ -127,11 +127,6 @@
                                         });
                                     });
                                 </script>
-
-
-
-
-
 
 
                             </div>

@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('css/signup.css') }}"> --}}
 
-</head>
+{{-- </head>
 <body>
     <a href="{{ url('account') }}" class="back-arrow">
         <i class="bi bi-arrow-left"></i>
     </a>
-    <div class="container">
+    <div class="container"> --}}
 
         <!-- Profile Card -->
         <div class="profile-card">

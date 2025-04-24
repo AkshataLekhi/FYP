@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/account/delete', [AccountController::class, 'delete'])->name('account.delete');
 });
 
-Route::post('/stories', [StoryController::class, 'store'])->name('stories.store');
+// Route::post('/stories', [StoryController::class, 'store'])->name('stories.store');
 
 
 
@@ -76,4 +76,4 @@ Route::post('/stories', [StoryController::class, 'store'])->name('stories.store'
 
 
 
-Route::post('/follow', [PostController::class, 'followUser'])->name('follow.user');
+// Route::post('/follow', [PostController::class, 'followUser'])->name('follow.user');

@@ -11,7 +11,7 @@
 <body>
   <div class="container">
 <!-- Login Form -->
-<div class="form-box login">
+{{-- <div class="form-box login">
     <form action="{{ url('loginUser') }}" method="POST">
       @csrf
       <h1>LOGIN</h1>
@@ -90,5 +90,5 @@
   </a>
 
   <script src="{{ asset('js/signup.js') }}"></script>
-</body>
+</body> --}}
 </html>
