@@ -290,56 +290,68 @@
 
             <!-- Story Upload Modal -->
             <div class="modal fade" id="storyModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog">
-                    <form method="POST" action="{{ route('stories.store') }}" enctype="multipart/form-data" class="modal-content">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <form method="POST" action="{{ route('stories.store') }}" enctype="multipart/form-data" class="modal-content border-0 shadow-lg rounded-4" style="background-color: #ffe4e9;">
                         @csrf
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label class="form-label">Title</label>
-                                <input type="text" name="title" class="form-control" required>
+                        <div class="modal-header" style="background-color: #ff1d28; color: white; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+                            <h5 class="modal-title fw-semibold">Upload Your Story</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body p-4">
+                            <div class="mb-4">
+                                <label class="form-label fw-medium text-danger">Story Title</label>
+                                <input type="text" name="title" class="form-control form-control-lg rounded-3 border-danger" placeholder="Enter a catchy title..." required>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Image</label>
-                                <input type="file" name="media" class="form-control" required>
+                                <label class="form-label fw-medium text-danger">Choose an Image</label>
+                                <input type="file" name="media" class="form-control form-control-lg rounded-3 border-danger" required>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" type="submit">Post</button>
+
+                        <div class="modal-footer bg-white rounded-bottom-4 p-3 d-flex justify-content-end">
+                            <button type="submit" class="btn px-4 py-2 rounded-pill fw-semibold text-white" style="background-color: #ff5a78;">
+                                <i class="bi bi-upload me-1"></i> Post Story
+                            </button>
                         </div>
                     </form>
-
                 </div>
             </div>
 
             <!-- Story Display Section -->
             @if($stories->count())
-    <div class="container mt-5">
-        <div class="d-flex flex-wrap gap-4">
-            @foreach($stories as $story)
-                <div class="card story-card border-0 shadow-sm rounded-4 overflow-hidden" style="width: 220px;">
-                    <img src="{{ asset('storage/' . $story->picture) }}"
-                         class="story-img"
-                         alt="Story Image">
+<div class="container mt-5">
+    <div class="d-flex flex-wrap justify-content-center gap-4">
+        @foreach($stories as $story)
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden" style="width: 230px; background-color: #ffe4e9;">
+                <img src="{{ asset('storage/' . $story->picture) }}"
+                     alt="Story Image"
+                     class="w-100"
+                     style="height: 180px; object-fit: cover;">
 
-                    <div class="card-body text-center bg-light">
-                        <h4 class="card-title mb-2 text-truncate" title="{{ $story->title }}">
-                            {{ $story->title }}
-                        </h4>
-                        <h7 class="fw mb-4">Temporary Post</h7>
-                        <p class="text-muted small mb-0">
-                            @if (\Carbon\Carbon::parse($story->expires_at)->isPast())
-                                Expired
-                            @else
-                                Expires in {{ \Carbon\Carbon::parse($story->expires_at)->diffForHumans(now(), true) }}
-                            @endif
-                        </p>
+                <div class="card-body text-center p-3">
+                    <h5 class="card-title text-truncate fw-semibold mb-2 text-danger" title="{{ $story->title }}">
+                        {{ $story->title }}
+                    </h5>
 
-                    </div>
+                    <span class="badge bg-danger-subtle text-danger fw-medium mb-2" style="background-color: #ffccd5;">
+                        is a Temporary Post
+                    </span>
+
+                    <p class="text-muted small mb-0">
+                        @if (\Carbon\Carbon::parse($story->expires_at)->isPast())
+                            <span class="text-danger fw-semibold">Expired</span>
+                        @else
+                            Expiring in <span class="fw-semibold">{{ \Carbon\Carbon::parse($story->expires_at)->diffForHumans(now(), true) }}</span>
+                        @endif
+                    </p>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
+</div>
 @endif
+
 
         </div>
     </div>
