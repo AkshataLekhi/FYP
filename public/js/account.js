@@ -103,7 +103,7 @@
     document.querySelectorAll('.tab-content').forEach((el, index) => {
         el.style.display = index === 0 ? 'block' : 'none';
     });
-    
+
     // Show posts by default
     document.getElementById('posts').classList.add('active');
 
@@ -195,4 +195,16 @@
             savesContent.style.display = 'none';
         });
     });
+
+    document.querySelectorAll('.tab-link').forEach(tab => {
+        tab.addEventListener('click', function () {
+            document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+
+            tab.classList.add('active');
+            const target = tab.getAttribute('data-target');
+            document.getElementById(target).style.display = 'block';
+        });
+    });
+
 

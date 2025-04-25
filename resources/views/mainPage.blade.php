@@ -134,7 +134,7 @@
                                 <p class="card-text">{{ $post->description }}</p>
                                 {{-- <p class="text-muted small">Posted {{ $post->created_at->diffForHumans() }}</p> --}}
 
-                            <div class="card-actions d-flex align-items-center gap-2">
+                                <div class="card-actions d-flex align-items-center gap-2">
                                 <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#ratingModal-{{ $post->id }}">
                                     Rate
                                 </button>
