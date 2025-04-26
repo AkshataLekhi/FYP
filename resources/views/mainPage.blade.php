@@ -84,7 +84,7 @@
                             <div class="fw-bold d-flex justify-content-between align-items-center">
                                 <span>Post By: {{ $post->user->name }}</span>
 
-                                <button class="btn btn-outline-danger btn-sm follow-btn"
+                                {{-- <button class="btn btn-outline-danger btn-sm follow-btn"
                                     data-user-id="{{ $post->user->id }}">
                                     <i class="bi bi-person-plus-fill"></i> Follow
                                 </button>
@@ -126,7 +126,7 @@
                                             });
                                         });
                                     });
-                                </script>
+                                </script> --}}
 
                             </div>
 
@@ -359,3 +359,4 @@
     <script src="{{ asset('js/mainPage.js') }}"></script>
 </body>
 </html>
+

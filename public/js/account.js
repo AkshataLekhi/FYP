@@ -1,210 +1,340 @@
-    // Get CSRF token from meta tag
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    // // Get CSRF token from meta tag
+    // const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    // DELETE POST
-    document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
-            const postId = this.getAttribute('data-id');
+    // // DELETE POST
+    // document.querySelectorAll('.delete-btn').forEach(button => {
+    //     button.addEventListener('click', function (e) {
+    //         e.preventDefault();
+    //         const postId = this.getAttribute('data-id');
 
-            if (confirm("Are you sure you want to delete this post?")) {
-                fetch(`/posts/${postId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken,
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to delete post');
-                    }
-                    // Remove post card from DOM
-                    const postCard = document.querySelector(`[data-post-id="${postId}"]`);
-                    if (postCard) {
-                        postCard.remove();
-                    }
-                })
-                .catch(error => {
-                    console.error('Delete error:', error);
-                    alert("Failed to delete post.");
-                });
-            }
-        });
-    });
+    //         if (confirm("Are you sure you want to delete this post?")) {
+    //             fetch(`/posts/${postId}`, {
+    //                 method: 'DELETE',
+    //                 headers: {
+    //                     'X-CSRF-TOKEN': csrfToken,
+    //                     'Accept': 'application/json',
+    //                     'Content-Type': 'application/json',
+    //                 }
+    //             })
+    //             .then(response => {
+    //                 if (!response.ok) {
+    //                     throw new Error('Failed to delete post');
+    //                 }
+    //                 // Remove post card from DOM
+    //                 const postCard = document.querySelector(`[data-post-id="${postId}"]`);
+    //                 if (postCard) {
+    //                     postCard.remove();
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 console.error('Delete error:', error);
+    //                 alert("Failed to delete post.");
+    //             });
+    //         }
+    //     });
+    // });
 
-    // EDIT POST
-    const editModal = document.getElementById('editModal');
-    const closeModal = document.getElementById('closeModal');
-    const editForm = document.getElementById('editPostForm');
+    // // EDIT POST
+    // const editModal = document.getElementById('editModal');
+    // const closeModal = document.getElementById('closeModal');
+    // const editForm = document.getElementById('editPostForm');
 
-    document.querySelectorAll('.edit-btn').forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.preventDefault();
+    // document.querySelectorAll('.edit-btn').forEach(button => {
+    //     button.addEventListener('click', function (e) {
+    //         e.preventDefault();
 
-            const postId = this.getAttribute('data-post-id');
-            const title = this.getAttribute('data-title');
-            const description = this.getAttribute('data-description');
+    //         const postId = this.getAttribute('data-post-id');
+    //         const title = this.getAttribute('data-title');
+    //         const description = this.getAttribute('data-description');
 
-            // Populate modal form
-            document.getElementById('editPostId').value = postId;
-            document.getElementById('editTitle').value = title;
-            document.getElementById('editDescription').value = description;
+    //         // Populate modal form
+    //         document.getElementById('editPostId').value = postId;
+    //         document.getElementById('editTitle').value = title;
+    //         document.getElementById('editDescription').value = description;
 
-            // Update form action
-            editForm.setAttribute('action', `/posts/${postId}`);
+    //         // Update form action
+    //         editForm.setAttribute('action', `/posts/${postId}`);
 
-            // Show the modal
-            editModal.style.display = 'block';
-        });
-    });
+    //         // Show the modal
+    //         editModal.style.display = 'block';
+    //     });
+    // });
 
-    // CLOSE MODAL
-    closeModal.addEventListener('click', () => {
-        editModal.style.display = 'none';
-    });
+    // // CLOSE MODAL
+    // closeModal.addEventListener('click', () => {
+    //     editModal.style.display = 'none';
+    // });
 
-    document.querySelectorAll('.edit-btn').forEach(button => {
-        // Only trigger edit modal if it's inside a post card
-        if (button.closest('.pinterest-card')) {
-            button.addEventListener('click', function (e) {
+    // document.querySelectorAll('.edit-btn').forEach(button => {
+    //     // Only trigger edit modal if it's inside a post card
+    //     if (button.closest('.pinterest-card')) {
+    //         button.addEventListener('click', function (e) {
+    //             e.preventDefault();
+    //             // your modal code...
+    //         });
+    //     }
+    // });
+
+
+    // document.querySelectorAll('.tab-link').forEach(link => {
+    //     link.addEventListener('click', function (e) {
+    //         e.preventDefault();
+
+    //         // Remove active class from all tabs
+    //         document.querySelectorAll('.tab-link').forEach(tab => {
+    //             tab.classList.remove('active');
+    //         });
+
+    //         // Hide all tab content
+    //         document.querySelectorAll('.tab-content').forEach(content => {
+    //             content.style.display = 'none';
+    //         });
+
+    //         // Add active class to clicked tab
+    //         this.classList.add('active');
+
+    //         // Show the corresponding tab content
+    //         const target = this.getAttribute('data-target');
+    //         document.getElementById(target).style.display = 'block';
+    //     });
+    // });
+
+    // // Show the first tab content by default
+    // document.querySelectorAll('.tab-content').forEach((el, index) => {
+    //     el.style.display = index === 0 ? 'block' : 'none';
+    // });
+
+    // // Show posts by default
+    // document.getElementById('posts').classList.add('active');
+
+
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     const savedTab = document.querySelector('.tab-link[data-target="saves"]');
+    //     const postsTab = document.querySelector('.tab-link[data-target="posts"]');
+    //     const savesContent = document.getElementById('saves');
+    //     const postsContent = document.getElementById('posts');
+    //     const savedPostIds = JSON.parse(localStorage.getItem('savedPosts')) || [];
+
+    //     savedTab.addEventListener('click', () => {
+    //         postsContent.style.display = 'none';
+    //         savesContent.style.display = 'block';
+
+    //         const allPosts = document.querySelectorAll('#posts .pinterest-card');
+    //         savesContent.innerHTML = '<div class="pinterest-container"><div class="pinterest-grid"></div></div>';
+    //         const savesGrid = savesContent.querySelector('.pinterest-grid');
+
+    //         allPosts.forEach(card => {
+    //             const postId = card.dataset.postId;
+    //             if (savedPostIds.includes(postId)) {
+    //                 savesGrid.appendChild(card.cloneNode(true));
+    //             }
+    //         });
+    //     });
+
+    //     postsTab.addEventListener('click', () => {
+    //         postsContent.style.display = 'block';
+    //         savesContent.style.display = 'none';
+    //     });
+    // });
+
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     const savedTab = document.querySelector('.tab-link[data-target="saves"]');
+    //     const postsTab = document.querySelector('.tab-link[data-target="posts"]');
+    //     const savesContent = document.getElementById('saves');
+    //     const postsContent = document.getElementById('posts');
+    //     let savedPostIds = JSON.parse(localStorage.getItem('savedPosts')) || [];
+
+    //     savedTab.addEventListener('click', () => {
+    //         postsContent.style.display = 'none';
+    //         savesContent.style.display = 'block';
+
+    //         const allPosts = document.querySelectorAll('#posts .pinterest-card');
+    //         savesContent.innerHTML = '<div class="pinterest-container"><div class="pinterest-grid"></div></div>';
+    //         const savesGrid = savesContent.querySelector('.pinterest-grid');
+
+    //         allPosts.forEach(card => {
+    //             const postId = card.dataset.postId;
+    //             if (savedPostIds.includes(postId)) {
+    //                 const clonedCard = card.cloneNode(true);
+
+    //                 // Remove edit & delete buttons
+    //                 const actionButtons = clonedCard.querySelector('.action-buttons');
+    //                 if (actionButtons) actionButtons.remove();
+
+    //                 // Add unsave button
+    //                 const newActionButtons = document.createElement('div');
+    //                 newActionButtons.classList.add('action-buttons');
+
+    //                 const unsaveBtn = document.createElement('a');
+    //                 unsaveBtn.href = '#';
+    //                 unsaveBtn.classList.add('action-btn', 'unsave-btn');
+    //                 unsaveBtn.dataset.postId = postId;
+    //                 unsaveBtn.innerHTML = '<i class="bi bi-bookmark-fill"></i>';
+
+    //                 newActionButtons.appendChild(unsaveBtn);
+    //                 clonedCard.querySelector('.card-body').appendChild(newActionButtons);
+
+    //                 savesGrid.appendChild(clonedCard);
+    //             }
+    //         });
+
+    //         // Handle unsave click
+    //         document.querySelectorAll('.unsave-btn').forEach(button => {
+    //             button.addEventListener('click', function (e) {
+    //                 e.preventDefault();
+    //                 const postId = this.dataset.postId;
+    //                 savedPostIds = savedPostIds.filter(id => id !== postId);
+    //                 localStorage.setItem('savedPosts', JSON.stringify(savedPostIds));
+    //                 this.closest('.pinterest-card').remove();
+    //             });
+    //         });
+    //     });
+
+    //     postsTab.addEventListener('click', () => {
+    //         postsContent.style.display = 'block';
+    //         savesContent.style.display = 'none';
+    //     });
+    // });
+
+    // document.querySelectorAll('.tab-link').forEach(tab => {
+    //     tab.addEventListener('click', function () {
+    //         document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+    //         document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+
+    //         tab.classList.add('active');
+    //         const target = tab.getAttribute('data-target');
+    //         document.getElementById(target).style.display = 'block';
+    //     });
+    // });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tab switching functionality
+        document.querySelectorAll('.tab-link').forEach(tab => {
+            tab.addEventListener('click', function(e) {
                 e.preventDefault();
-                // your modal code...
+
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                const target = this.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
             });
-        }
-    });
-
-
-    document.querySelectorAll('.tab-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            // Remove active class from all tabs
-            document.querySelectorAll('.tab-link').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Hide all tab content
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.style.display = 'none';
-            });
-
-            // Add active class to clicked tab
-            this.classList.add('active');
-
-            // Show the corresponding tab content
-            const target = this.getAttribute('data-target');
-            document.getElementById(target).style.display = 'block';
         });
-    });
 
-    // Show the first tab content by default
-    document.querySelectorAll('.tab-content').forEach((el, index) => {
-        el.style.display = index === 0 ? 'block' : 'none';
-    });
+        // Initialize edit modals
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
 
-    // Show posts by default
-    document.getElementById('posts').classList.add('active');
+                const postId = this.getAttribute('data-post-id');
+                const title = this.getAttribute('data-title');
+                const description = this.getAttribute('data-description');
 
+                // Set form values
+                document.getElementById('editPostId').value = postId;
+                document.getElementById('editTitle').value = title;
+                document.getElementById('editDescription').value = description;
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedTab = document.querySelector('.tab-link[data-target="saves"]');
-        const postsTab = document.querySelector('.tab-link[data-target="posts"]');
-        const savesContent = document.getElementById('saves');
-        const postsContent = document.getElementById('posts');
-        const savedPostIds = JSON.parse(localStorage.getItem('savedPosts')) || [];
+                // Set form action
+                document.getElementById('editPostForm').action = `/posts/${postId}`;
 
-        savedTab.addEventListener('click', () => {
-            postsContent.style.display = 'none';
-            savesContent.style.display = 'block';
+                // Show modal
+                const editModal = new bootstrap.Modal(document.getElementById('editPostModal'));
+                editModal.show();
+            });
+        });
 
-            const allPosts = document.querySelectorAll('#posts .pinterest-card');
-            savesContent.innerHTML = '<div class="pinterest-container"><div class="pinterest-grid"></div></div>';
-            const savesGrid = savesContent.querySelector('.pinterest-grid');
+        // Delete post functionality
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
 
-            allPosts.forEach(card => {
-                const postId = card.dataset.postId;
-                if (savedPostIds.includes(postId)) {
-                    savesGrid.appendChild(card.cloneNode(true));
+                const postId = this.getAttribute('data-id');
+
+                if (confirm('Are you sure you want to delete this post?')) {
+                    fetch(`/posts/${postId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Remove the post card from DOM
+                            document.querySelector(`.pinterest-card[data-post-id="${postId}"]`).remove();
+
+                            // Show success message
+                            alert('Post deleted successfully!');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
                 }
             });
         });
 
-        postsTab.addEventListener('click', () => {
-            postsContent.style.display = 'block';
-            savesContent.style.display = 'none';
-        });
-    });
+        // Like post functionality
+        document.querySelectorAll('.like-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const postId = this.getAttribute('data-post-id');
+                const icon = this.querySelector('i');
+                const likeCount = this.querySelector('.like-count');
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const savedTab = document.querySelector('.tab-link[data-target="saves"]');
-        const postsTab = document.querySelector('.tab-link[data-target="posts"]');
-        const savesContent = document.getElementById('saves');
-        const postsContent = document.getElementById('posts');
-        let savedPostIds = JSON.parse(localStorage.getItem('savedPosts')) || [];
+                fetch(`/posts/${postId}/like`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update like icon
+                        if (data.action === 'liked') {
+                            icon.classList.remove('bi-heart');
+                            icon.classList.add('bi-heart-fill', 'text-danger');
+                        } else {
+                            icon.classList.remove('bi-heart-fill', 'text-danger');
+                            icon.classList.add('bi-heart');
+                        }
 
-        savedTab.addEventListener('click', () => {
-            postsContent.style.display = 'none';
-            savesContent.style.display = 'block';
-
-            const allPosts = document.querySelectorAll('#posts .pinterest-card');
-            savesContent.innerHTML = '<div class="pinterest-container"><div class="pinterest-grid"></div></div>';
-            const savesGrid = savesContent.querySelector('.pinterest-grid');
-
-            allPosts.forEach(card => {
-                const postId = card.dataset.postId;
-                if (savedPostIds.includes(postId)) {
-                    const clonedCard = card.cloneNode(true);
-
-                    // Remove edit & delete buttons
-                    const actionButtons = clonedCard.querySelector('.action-buttons');
-                    if (actionButtons) actionButtons.remove();
-
-                    // Add unsave button
-                    const newActionButtons = document.createElement('div');
-                    newActionButtons.classList.add('action-buttons');
-
-                    const unsaveBtn = document.createElement('a');
-                    unsaveBtn.href = '#';
-                    unsaveBtn.classList.add('action-btn', 'unsave-btn');
-                    unsaveBtn.dataset.postId = postId;
-                    unsaveBtn.innerHTML = '<i class="bi bi-bookmark-fill"></i>';
-
-                    newActionButtons.appendChild(unsaveBtn);
-                    clonedCard.querySelector('.card-body').appendChild(newActionButtons);
-
-                    savesGrid.appendChild(clonedCard);
-                }
-            });
-
-            // Handle unsave click
-            document.querySelectorAll('.unsave-btn').forEach(button => {
-                button.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const postId = this.dataset.postId;
-                    savedPostIds = savedPostIds.filter(id => id !== postId);
-                    localStorage.setItem('savedPosts', JSON.stringify(savedPostIds));
-                    this.closest('.pinterest-card').remove();
+                        // Update like count
+                        likeCount.textContent = data.likesCount;
+                    }
                 });
             });
         });
 
-        postsTab.addEventListener('click', () => {
-            postsContent.style.display = 'block';
-            savesContent.style.display = 'none';
+        // Unsave post functionality
+        document.querySelectorAll('.unsave-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const postId = this.getAttribute('data-post-id');
+
+                fetch(`/posts/${postId}/unsave`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove the post card from DOM
+                        this.closest('.pinterest-card').remove();
+
+                        // Show success message or update UI
+                        alert('Post unsaved successfully!');
+                    }
+                });
+            });
         });
     });
-
-    document.querySelectorAll('.tab-link').forEach(tab => {
-        tab.addEventListener('click', function () {
-            document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-
-            tab.classList.add('active');
-            const target = tab.getAttribute('data-target');
-            document.getElementById(target).style.display = 'block';
-        });
-    });
-
-

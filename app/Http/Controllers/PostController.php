@@ -115,25 +115,40 @@ class PostController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function followUser(Request $request)
+//     public function followUser(Request $request)
+// {
+//     $userIdToFollow = $request->input('user_id');
+//     $user = Auth::user();
+
+//     // Check if the user is trying to follow themselves
+//     if ($user->id == $userIdToFollow) {
+//         return response()->json(['success' => false, 'message' => 'You cannot follow yourself.']);
+//     }
+
+//     // Check if the user is already following the target user
+//     if ($user->followings()->where('followed_user_id', $userIdToFollow)->exists()) {
+//         return response()->json(['success' => false, 'message' => 'Already following.']);
+//     }
+
+//     // Attach the user to the following list
+//     $user->followings()->attach($userIdToFollow);
+
+//     return response()->json(['success' => true, 'message' => 'Now following.']);
+// }
+
+
+
+// app/Http/Controllers/PostController.php
+public function save(Post $post)
 {
-    $userIdToFollow = $request->input('user_id');
-    $user = Auth::user();
+    Auth::user()->savedPosts()->syncWithoutDetaching([$post->id]);
+    return response()->json(['success' => true]);
+}
 
-    // Check if the user is trying to follow themselves
-    if ($user->id == $userIdToFollow) {
-        return response()->json(['success' => false, 'message' => 'You cannot follow yourself.']);
-    }
-
-    // Check if the user is already following the target user
-    if ($user->followings()->where('followed_user_id', $userIdToFollow)->exists()) {
-        return response()->json(['success' => false, 'message' => 'Already following.']);
-    }
-
-    // Attach the user to the following list
-    $user->followings()->attach($userIdToFollow);
-
-    return response()->json(['success' => true, 'message' => 'Now following.']);
+public function unsave(Post $post)
+{
+    Auth::user()->savedPosts()->detach($post->id);
+    return response()->json(['success' => true]);
 }
 
 }

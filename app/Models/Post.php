@@ -39,4 +39,10 @@ class Post extends Model
         return $this->belongsToMany(User::class, 'likes')->withTimestamps();
     }
 
+    // app/Models/Post.php
+public function savedByUsers()
+{
+    return $this->belongsToMany(User::class, 'saved_posts')->withTimestamps();
+}
+
 }

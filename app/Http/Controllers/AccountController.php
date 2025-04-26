@@ -11,14 +11,32 @@ class AccountController extends Controller
 {
 
 
+    // public function index()
+    // {
+    //     // $posts = Post::all();
+
+    //     $posts = Auth::user()->posts;
+    //     $savedPosts = Auth::user()->savedPosts;
+    //     return view('myAccount', compact('posts', 'savedPosts'));
+    // }
+
     public function index()
     {
-        // $posts = Post::all();
+        // Get authenticated user
+        $user = Auth::user();
 
-        $posts = Auth::user()->posts;
-        return view('myAccount', compact('posts'));
+        // Get user's posts (with eager loading for better performance)
+        $posts = $user->posts()->with(['likes', 'comments'])->latest()->get();
+
+        // Get user's saved posts (if using the saved posts functionality)
+        $savedPosts = $user->savedPosts()->with(['user', 'likes', 'comments'])->latest()->get();
+
+        return view('myAccount', [
+            'posts' => $posts,
+            'savedPosts' => $savedPosts ?? collect() // Fallback to empty collection if null
+        ]);
     }
-
+    
     public function create()
     {
         return view('posts.create');
