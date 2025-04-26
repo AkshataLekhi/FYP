@@ -20,9 +20,9 @@ class AccountController extends Controller
     //     return view('myAccount', compact('posts', 'savedPosts'));
     // }
 
-   
 
-   
+
+
     public function index()
 {
     $user = Auth::user();

@@ -71,13 +71,8 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/stories', [StoryController::class, 'store'])->name('stories.store');
 
 
-
-
-
-
 Route::post('/posts/{post}/save', [PostController::class, 'save'])->name('posts.save');
 Route::post('/posts/{post}/unsave', [PostController::class, 'unsave'])->name('posts.unsave');
-
 
 
 Route::post('/posts/{post}/follow', [PostController::class, 'followPost'])->name('posts.follow');

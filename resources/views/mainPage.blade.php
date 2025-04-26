@@ -31,9 +31,7 @@
 
         <div class="nav-icons">
             <a href="{{ route('account') }}"><i class="bi bi-person-fill"></i></a>
-
-            {{-- <a href="#"><i class="bi bi-bell-fill"></i></a> --}}
-
+            
             {{-- Notification Section --}}
             <div class="notification-wrapper position-relative">
                 <i class="bi bi-bell notification-bell" onclick="toggleNotificationBox()"></i>
@@ -84,20 +82,11 @@
                             <div class="fw-bold d-flex justify-content-between align-items-center">
                                 <span>Post By: {{ $post->user->name }}</span>
 
-                             <!-- Follow Button -->
-                             {{-- <a href="#" class="action-btn follow-btn" data-post-id="{{ $post->id }}">
-                                <i class="bi bi-person-plus"></i>
-                                <span class="follow-status">
-                                    {{ $post->savedByUsers->contains(auth()->id()) ? 'Unfollow' : 'Follow' }}
-                                </span>
-                            </a> --}}
-
                             <!-- Follow Button -->
-<a href="#" class="action-btn follow-btn" data-post-id="{{ $post->id }}" data-creator-name="{{ $post->user->name }}">
-    <i class="bi bi-person-plus"></i>
-    <span class="follow-status">{{ $post->savedByUsers->contains(auth()->id()) ? 'Unfollow' : 'Follow' }}</span>
-</a>
-
+                            <a href="#" class="action-btn follow-btn" data-post-id="{{ $post->id }}" data-creator-name="{{ $post->user->name }}">
+                                <i class="bi bi-person-plus"></i>
+                                <span class="follow-status">{{ $post->savedByUsers->contains(auth()->id()) ? 'Unfollow' : 'Follow' }}</span>
+                            </a>
 
                             </div>
 
