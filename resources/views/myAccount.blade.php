@@ -39,8 +39,8 @@
     <div class="tabs">
         <a href="#" class="tab-link active" data-target="posts">Your Posts</a>
         <a href="#" class="tab-link" data-target="saves">Your Saves</a>
-        <a href="#" class="tab-link" data-target="followers">Followers</a>
-<a href="#" class="tab-link" data-target="following">Following</a>
+        {{-- <a href="#" class="tab-link" data-target="followers">Followers</a>
+<a href="#" class="tab-link" data-target="following">Following</a> --}}
 
     </div>
 
@@ -74,7 +74,7 @@
                         </div>
                     </div>
 
-                    <!-- Followers Tab -->
+                    {{-- <!-- Followers Tab -->
 <div id="followers" class="tab-content">
     <div class="pinterest-container">
         <div class="pinterest-grid">
@@ -92,10 +92,10 @@
             @endif
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- Following Tab -->
-<div id="following" class="tab-content">
+{{-- <div id="following" class="tab-content">
     <div class="pinterest-container">
         <div class="pinterest-grid">
             @if (!empty($following) && $following->count())
@@ -112,7 +112,7 @@
             @endif
         </div>
     </div>
-</div>
+</div> --}}
 
 
                     <!-- Comment Modal -->

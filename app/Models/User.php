@@ -57,15 +57,13 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'follower_user_id', 'followed_user_id');
     }
 
-//     public function followedPosts()
-// {
-//     return $this->belongsToMany(Post::class, 'saved_posts', 'user_id', 'post_id');
-// }
+    public function followedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'followed_posts', 'user_id', 'post_id');
+    }
+    
 
-  // User followed posts (new pivot table for follow posts)
-  public function followedPosts()
-  {
-      return $this->belongsToMany(Post::class, 'followed_posts');
-  }
+
+
 
 }

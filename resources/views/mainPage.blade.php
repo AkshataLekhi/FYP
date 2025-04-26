@@ -85,13 +85,18 @@
                                 <span>Post By: {{ $post->user->name }}</span>
 
                              <!-- Follow Button -->
-                             <a href="#" class="action-btn follow-btn" data-post-id="{{ $post->id }}">
+                             {{-- <a href="#" class="action-btn follow-btn" data-post-id="{{ $post->id }}">
                                 <i class="bi bi-person-plus"></i>
                                 <span class="follow-status">
                                     {{ $post->savedByUsers->contains(auth()->id()) ? 'Unfollow' : 'Follow' }}
                                 </span>
-                            </a>
+                            </a> --}}
 
+                            <!-- Follow Button -->
+<a href="#" class="action-btn follow-btn" data-post-id="{{ $post->id }}" data-creator-name="{{ $post->user->name }}">
+    <i class="bi bi-person-plus"></i>
+    <span class="follow-status">{{ $post->savedByUsers->contains(auth()->id()) ? 'Unfollow' : 'Follow' }}</span>
+</a>
 
 
                             </div>

@@ -75,10 +75,6 @@ Route::post('/stories', [StoryController::class, 'store'])->name('stories.store'
 
 
 
-
-// Route::post('/follow', [PostController::class, 'followUser'])->name('follow.user');
-
-// routes/web.php
 Route::post('/posts/{post}/save', [PostController::class, 'save'])->name('posts.save');
 Route::post('/posts/{post}/unsave', [PostController::class, 'unsave'])->name('posts.unsave');
 
