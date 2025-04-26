@@ -84,49 +84,15 @@
                             <div class="fw-bold d-flex justify-content-between align-items-center">
                                 <span>Post By: {{ $post->user->name }}</span>
 
-                                {{-- <button class="btn btn-outline-danger btn-sm follow-btn"
-                                    data-user-id="{{ $post->user->id }}">
-                                    <i class="bi bi-person-plus-fill"></i> Follow
-                                </button>
+                             <!-- Follow Button -->
+                             <a href="#" class="action-btn follow-btn" data-post-id="{{ $post->id }}">
+                                <i class="bi bi-person-plus"></i>
+                                <span class="follow-status">
+                                    {{ $post->savedByUsers->contains(auth()->id()) ? 'Unfollow' : 'Follow' }}
+                                </span>
+                            </a>
 
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        // Select all the follow buttons
-                                        const followButtons = document.querySelectorAll('.follow-btn');
 
-                                        // Add event listener to each follow button
-                                        followButtons.forEach(function (button) {
-                                            button.addEventListener('click', function (e) {
-                                                // Get the user ID from the button's data attribute
-                                                const userIdToFollow = e.target.closest('button').getAttribute('data-user-id');
-
-                                                // Send a POST request to follow the user
-                                                fetch('{{ route('follow.user') }}', {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json',
-                                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                                                    },
-                                                    body: JSON.stringify({
-                                                        user_id: userIdToFollow
-                                                    })
-                                                })
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    if (data.success) {
-                                                        // If successful, update the button text or appearance
-                                                        button.innerHTML = '<i class="bi bi-person-check-fill"></i> Following';
-                                                        button.classList.remove('btn-outline-danger');
-                                                        button.classList.add('btn-outline-success');
-                                                    } else {
-                                                        alert(data.message);
-                                                    }
-                                                })
-                                                .catch(error => console.error('Error:', error));
-                                            });
-                                        });
-                                    });
-                                </script> --}}
 
                             </div>
 
@@ -160,6 +126,8 @@
                                     <a href="#" class="action-btn save-btn" data-post-id="{{ $post->id }}">
                                         <i class="bi bi-bookmark"></i>
                                     </a>
+
+
 
                                 </div>
                             </div>
@@ -357,6 +325,8 @@
     </div>
 
     <script src="{{ asset('js/mainPage.js') }}"></script>
+
+    <script src="{{ asset('js/account.js') }}"></script>
 </body>
 </html>
 

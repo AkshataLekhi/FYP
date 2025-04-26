@@ -6,6 +6,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Post;
+
 
 
 class User extends Authenticatable
@@ -35,41 +37,35 @@ class User extends Authenticatable
         return $this->fullname;
     }
 
-    // public function followings()
-    // {
-    //     return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
-    // }
+    public function savedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'saved_posts')->withTimestamps();
+    }
 
-    // // ✅ Optional: Followers relationship
-    // public function followers()
-    // {
-    //     return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
-    // }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'followed_user_id', 'follower_user_id');
+    }
 
-    // public function followings()
-    // {
-    //     return $this->belongsToMany(User::class, 'follows', 'follower_user_id', 'followed_user_id');
-    // }
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_user_id', 'followed_user_id');
+    }
 
-    // public function followers()
-    // {
-    //     return $this->belongsToMany(User::class, 'follows', 'followed_user_id', 'follower_user_id');
-    // }
+//     public function followedPosts()
+// {
+//     return $this->belongsToMany(Post::class, 'saved_posts', 'user_id', 'post_id');
+// }
 
-    // app/Models/User.php
-public function savedPosts()
-{
-    return $this->belongsToMany(Post::class, 'saved_posts')->withTimestamps();
-}
-
-public function posts()
-{
-    return $this->hasMany(Post::class);
-}
-
-
+  // User followed posts (new pivot table for follow posts)
+  public function followedPosts()
+  {
+      return $this->belongsToMany(Post::class, 'followed_posts');
+  }
 
 }
-
-

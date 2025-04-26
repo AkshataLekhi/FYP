@@ -39,6 +39,9 @@
     <div class="tabs">
         <a href="#" class="tab-link active" data-target="posts">Your Posts</a>
         <a href="#" class="tab-link" data-target="saves">Your Saves</a>
+        <a href="#" class="tab-link" data-target="followers">Followers</a>
+<a href="#" class="tab-link" data-target="following">Following</a>
+
     </div>
 
     <!-- Tab Contents -->
@@ -70,6 +73,47 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Followers Tab -->
+<div id="followers" class="tab-content">
+    <div class="pinterest-container">
+        <div class="pinterest-grid">
+            @if (!empty($followers) && $followers->count())
+                @foreach ($followers as $follower)
+                    <div class="pinterest-card text-center">
+                        <div class="card p-3">
+                            <h5 class="card-title">{{ $follower->name }}</h5>
+                            <p class="text-muted small">{{ $follower->email }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <p>No followers yet.</p>
+            @endif
+        </div>
+    </div>
+</div>
+
+<!-- Following Tab -->
+<div id="following" class="tab-content">
+    <div class="pinterest-container">
+        <div class="pinterest-grid">
+            @if (!empty($following) && $following->count())
+                @foreach ($following as $follow)
+                    <div class="pinterest-card text-center">
+                        <div class="card p-3">
+                            <h5 class="card-title">{{ $follow->name }}</h5>
+                            <p class="text-muted small">{{ $follow->email }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <p>Not following anyone yet.</p>
+            @endif
+        </div>
+    </div>
+</div>
+
 
                     <!-- Comment Modal -->
                     <div class="modal fade" id="commentModal-{{ $post->id }}" tabindex="-1" aria-hidden="true">

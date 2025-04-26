@@ -138,7 +138,7 @@ class PostController extends Controller
 
 
 
-// app/Http/Controllers/PostController.php
+
 public function save(Post $post)
 {
     Auth::user()->savedPosts()->syncWithoutDetaching([$post->id]);
@@ -150,5 +150,47 @@ public function unsave(Post $post)
     Auth::user()->savedPosts()->detach($post->id);
     return response()->json(['success' => true]);
 }
+
+
+// public function followPost($postId, Request $request)
+// {
+//     $post = Post::findOrFail($postId);
+//     $user = auth()->user();
+
+//     // Check if the user is already following the post
+//     if ($request->action === 'follow') {
+//         $post->followers()->attach($user->id);  // Assuming there's a pivot table `post_user` for following
+//     } else {
+//         $post->followers()->detach($user->id);
+//     }
+
+//     return response()->json(['success' => true]);
+// }
+
+public function followPost($postId)
+{
+    $post = Post::find($postId);
+    dd($post);
+
+    // Check if the logged-in user is the creator of the post
+    if (auth()->user()->id === $post->user_id) {
+        return response()->json(['success' => false, 'message' => 'You cannot follow your own post.'], 400);
+    }
+
+    // Proceed with follow/unfollow logic
+    $action = request()->input('action');
+    $user = auth()->user();
+
+    dd($post);
+
+    if ($action === 'follow') {
+        $user->followedPosts()->attach($postId); // Assuming you have a relationship for followed posts
+        return response()->json(['success' => true, 'message' => 'You are now following this post.']);
+    } else {
+        $user->followedPosts()->detach($postId);
+        return response()->json(['success' => true, 'message' => 'You have unfollowed this post.']);
+    }
+}
+
 
 }

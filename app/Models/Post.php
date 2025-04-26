@@ -45,4 +45,9 @@ public function savedByUsers()
     return $this->belongsToMany(User::class, 'saved_posts')->withTimestamps();
 }
 
+// public function followers()
+// {
+//     return $this->belongsToMany(User::class, 'saved_posts');
+// }
+
 }

@@ -20,23 +20,49 @@ class AccountController extends Controller
     //     return view('myAccount', compact('posts', 'savedPosts'));
     // }
 
+    // public function index()
+    // {
+    //     // Get authenticated user
+    //     $user = Auth::user();
+
+    //     // Get user's posts (with eager loading for better performance)
+    //     $posts = $user->posts()->with(['likes', 'comments'])->latest()->get();
+
+    //     // Get user's saved posts
+    //     $savedPosts = $user->savedPosts()->with(['user', 'likes', 'comments'])->latest()->get();
+
+    //     // Get user's followers and following
+    //     $followers = $user->followers;
+    //     $following = $user->following;
+
+    //     return view('myAccount', [
+    //         'posts' => $posts,
+    //         'savedPosts' => $savedPosts ?? collect(), // Fallback to empty collection if null
+    //         'followers' => $followers,
+    //         'following' => $following
+    //     ]);
+    // }
+
+
     public function index()
-    {
-        // Get authenticated user
-        $user = Auth::user();
+{
+    // Get authenticated user
+    $user = Auth::user();
 
-        // Get user's posts (with eager loading for better performance)
-        $posts = $user->posts()->with(['likes', 'comments'])->latest()->get();
+    // Get user's posts (with eager loading for better performance)
+    $posts = $user->posts()->with(['likes', 'comments'])->latest()->get();
 
-        // Get user's saved posts (if using the saved posts functionality)
-        $savedPosts = $user->savedPosts()->with(['user', 'likes', 'comments'])->latest()->get();
+    // Get user's saved posts
+    $savedPosts = $user->savedPosts()->with(['user', 'likes', 'comments'])->latest()->get();
 
-        return view('myAccount', [
-            'posts' => $posts,
-            'savedPosts' => $savedPosts ?? collect() // Fallback to empty collection if null
-        ]);
-    }
-    
+    // Get user's followers and following
+    $followers = $user->followers;
+    $following = $user->following;
+
+    return view('myAccount', compact('posts', 'savedPosts', 'followers', 'following'));
+}
+
+
     public function create()
     {
         return view('posts.create');
