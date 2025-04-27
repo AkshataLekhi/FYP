@@ -256,7 +256,7 @@
                     <form method="POST" action="{{ route('stories.store') }}" enctype="multipart/form-data" class="modal-content border-0 shadow-lg rounded-4" style="background-color: #ffe4e9;">
                         @csrf
                         <div class="modal-header" style="background-color: #ff1d28; color: white; border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
-                            <h5 class="modal-title fw-semibold">Upload Your Story</h5>
+                            <h5 class="modal-title fw-semibold">Upload Your Temporary Post</h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 

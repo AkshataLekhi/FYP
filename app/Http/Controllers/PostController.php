@@ -135,7 +135,7 @@ public function followPost($postId)
 
         // Check if the logged-in user is the creator of the post
         if ($user->id === $post->user_id) {
-            return response()->json(['success' => false, 'message' => 'You cannot follow your own post.'], 400);
+            return response()->json(['success' => false, 'message' => 'You cannot follow yourself.'], 400);
         }
 
         $action = request()->input('action'); // 'follow' or 'unfollow'

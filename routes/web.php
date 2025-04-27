@@ -68,11 +68,12 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/account/delete', [AccountController::class, 'delete'])->name('account.delete');
 });
 
+// Temporary post
 Route::post('/stories', [StoryController::class, 'store'])->name('stories.store');
 
-
+// Save and Un-Save
 Route::post('/posts/{post}/save', [PostController::class, 'save'])->name('posts.save');
 Route::post('/posts/{post}/unsave', [PostController::class, 'unsave'])->name('posts.unsave');
 
-
+// Follow and Unfollow
 Route::post('/posts/{post}/follow', [PostController::class, 'followPost'])->name('posts.follow');
