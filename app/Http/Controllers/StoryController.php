@@ -28,7 +28,7 @@ class StoryController extends Controller
             'title' => $request->title,
             'picture' => $path,
             // 'expires_at' => now()->addHour(),
-            'expires_at' => now()->addMinutes(10), // ✅ NEW (expires in 10 minutes)
+            'expires_at' => now()->addMinutes(10), //(expires in 10 minutes)
 
         ]);
 

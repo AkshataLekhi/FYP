@@ -12,18 +12,15 @@ class Post extends Model
     protected $fillable = [
         'title',
         'description',
-        'links',
         'picture',
         'user_id',
     ];
 
-    // ✅ Post belongs to a user
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // ✅ Post has one poll
     public function poll()
     {
         return $this->hasOne(Poll::class);

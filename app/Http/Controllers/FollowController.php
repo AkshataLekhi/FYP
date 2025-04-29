@@ -9,4 +9,4 @@ use Illuminate\Support\Facades\Auth;
 class FollowController extends Controller
 {
 
-}
+} 

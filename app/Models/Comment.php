@@ -15,17 +15,11 @@ class Comment extends Model
         'content',
     ];
 
-    /**
-     * Each comment belongs to a post.
-     */
     public function post()
     {
         return $this->belongsTo(Post::class);
     }
 
-    /**
-     * Each comment belongs to a user.
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
